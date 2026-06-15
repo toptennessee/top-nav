@@ -3,251 +3,212 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>top-nav — Classification Spine</title>
-
+  <title>top-nav Seed System</title>
   <style>
     :root {
       --bg: #f6f5f2;
       --surface: #ffffff;
-      --surface-soft: #faf9f6;
+      --soft: #faf9f6;
       --ink: #171717;
       --muted: #6f6f68;
       --line: #e6e2d8;
       --blue: #2563eb;
-      --green: #16a34a;
-      --orange: #ea580c;
-      --radius: 18px;
-      --shadow: 0 24px 70px rgba(20, 20, 20, 0.08);
+      --radius: 22px;
+      --shadow: 0 24px 70px rgba(20,20,20,.08);
     }
 
     * { box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
-
     body {
       margin: 0;
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
       background: var(--bg);
       color: var(--ink);
       line-height: 1.55;
     }
 
-    button, input {
-      font: inherit;
-    }
-
-    .workspace {
-      position: sticky;
-      top: 0;
-      z-index: 50;
-      background: rgba(246, 245, 242, 0.86);
-      backdrop-filter: blur(18px);
-      border-bottom: 1px solid var(--line);
-    }
-
-    .workspace-inner {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 14px 22px;
-    }
-
-    .top-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 12px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-weight: 760;
-      letter-spacing: -0.03em;
-    }
-
-    .mark {
-      width: 34px;
-      height: 34px;
-      border-radius: 10px;
-      background: var(--ink);
-      color: white;
-      display: grid;
-      place-items: center;
-      font-weight: 800;
-    }
-
-    .status {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .capture-bar {
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 10px;
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      padding: 8px;
-      box-shadow: 0 8px 24px rgba(20, 20, 20, 0.05);
-    }
-
-    .capture-input {
-      border: 0;
-      outline: 0;
-      background: transparent;
-      padding: 12px 16px;
-      font-size: 15px;
-      color: var(--ink);
-    }
-
-    .capture-button,
-    .submit-button {
-      border: 0;
-      border-radius: 999px;
-      background: var(--ink);
-      color: white;
-      padding: 10px 18px;
-      font-weight: 750;
-      cursor: pointer;
-    }
-
-    main {
-      max-width: 1180px;
-      margin: 0 auto;
-      padding: 72px 22px;
-    }
-
-    .hero {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 32px;
-      align-items: center;
-      margin-bottom: 72px;
+    header {
+      max-width: 980px;
+      margin: auto;
+      padding: 72px 22px 36px;
     }
 
     h1 {
-      font-size: clamp(3rem, 8vw, 6.8rem);
-      line-height: 0.92;
-      letter-spacing: -0.075em;
+      font-size: clamp(3rem, 8vw, 6.5rem);
+      line-height: .92;
+      letter-spacing: -.075em;
       margin: 0 0 24px;
     }
 
     h2 {
-      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-size: clamp(2rem, 4vw, 3rem);
       line-height: 1;
-      letter-spacing: -0.055em;
+      letter-spacing: -.055em;
       margin: 0 0 18px;
-    }
-
-    h3 {
-      margin: 0 0 10px;
-      letter-spacing: -0.03em;
     }
 
     p {
       color: var(--muted);
-      max-width: 720px;
-      margin: 0 0 18px;
       font-size: 17px;
+      max-width: 720px;
     }
 
     .signal {
       color: var(--ink);
-      font-size: 21px;
-      font-weight: 720;
+      font-size: 22px;
+      font-weight: 760;
     }
 
-    section {
-      padding: 56px 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .label {
-      display: inline-flex;
-      border-radius: 999px;
-      padding: 5px 10px;
-      font-size: 12px;
-      font-weight: 800;
-      background: var(--surface-soft);
+    .capture-shell {
+      max-width: 430px;
+      margin: 40px auto;
+      background: var(--surface);
       border: 1px solid var(--line);
-      color: var(--muted);
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
+      border-radius: 32px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
     }
 
-    .demo-window {
-      background: #111827;
-      color: white;
-      border-radius: 24px;
-      padding: 16px;
-      box-shadow: 0 40px 90px rgba(17, 24, 39, 0.28);
+    .capture-top {
+      padding: 18px;
+      border-bottom: 1px solid var(--line);
+      background: var(--soft);
     }
 
-    .demo-spine {
+    .capture-title {
+      font-weight: 850;
+      letter-spacing: -.04em;
+      margin-bottom: 14px;
+    }
+
+    .capture-input {
+      width: 100%;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      padding: 15px;
+      font-size: 15px;
+      outline: none;
+      background: white;
+    }
+
+    .spine-row {
       display: flex;
       gap: 8px;
       overflow-x: auto;
-      margin-bottom: 14px;
-    }
-
-    .demo-chip {
-      background: #1f2937;
-      color: #cbd5e1;
-      padding: 9px 12px;
-      border-radius: 12px;
-      font-size: 13px;
-      white-space: nowrap;
-    }
-
-    .demo-chip.on {
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--line);
       background: white;
-      color: #111827;
     }
 
-    .demo-capture {
-      background: white;
-      color: #111827;
-      border-radius: 16px;
-      padding: 18px;
-      margin-bottom: 14px;
-    }
-
-    .hash {
-      color: var(--blue);
-      font-weight: 800;
-    }
-
-    .demo-card {
-      background: #1f2937;
-      border: 1px solid #374151;
-      border-radius: 16px;
-      padding: 16px;
-      color: #d1d5db;
-      font-size: 14px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 16px;
-      margin-top: 24px;
-    }
-
-    .card {
-      background: var(--surface);
+    .spine {
       border: 1px solid var(--line);
-      border-radius: var(--radius);
-      padding: 22px;
+      background: var(--soft);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 9px 13px;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .04em;
+      white-space: nowrap;
+      cursor: pointer;
     }
 
-    .split {
+    .spine.active {
+      background: var(--ink);
+      color: white;
+      border-color: var(--ink);
+    }
+
+    .layer {
+      padding: 20px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      border: 1px solid var(--line);
+      background: var(--soft);
+      color: var(--muted);
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 11px;
+      font-weight: 850;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .tag-list {
       display: grid;
-      grid-template-columns: 0.8fr 1.2fr;
-      gap: 28px;
-      align-items: start;
+      gap: 10px;
+      margin-top: 16px;
+    }
+
+    .tag {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 17px;
+      padding: 14px;
+      cursor: pointer;
+    }
+
+    .tag.selected {
+      border-color: var(--ink);
+      box-shadow: inset 0 0 0 1px var(--ink);
+    }
+
+    .tag strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .tag span {
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .selected-bar {
+      padding: 16px 20px;
+      border-top: 1px solid var(--line);
+      background: var(--soft);
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+      margin-top: 10px;
+    }
+
+    .pill {
+      border: 1px solid var(--line);
+      background: white;
+      border-radius: 999px;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-weight: 750;
+    }
+
+    .submit {
+      width: 100%;
+      margin-top: 14px;
+      border: 0;
+      border-radius: 999px;
+      background: var(--ink);
+      color: white;
+      padding: 13px 18px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    main {
+      max-width: 980px;
+      margin: auto;
+      padding: 20px 22px 80px;
+    }
+
+    section {
+      padding: 46px 0;
+      border-top: 1px solid var(--line);
     }
 
     pre {
@@ -256,749 +217,175 @@
       border-radius: 18px;
       padding: 22px;
       overflow-x: auto;
-      font-size: 14px;
       line-height: 1.65;
     }
 
-    .flow {
+    .grid {
       display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 10px;
-      margin-top: 24px;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
     }
 
-    .step {
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 16px;
-      padding: 14px;
-      font-size: 13px;
-      font-weight: 750;
-      min-height: 92px;
-    }
-
-    .step span {
-      display: block;
-      color: var(--muted);
-      font-size: 11px;
-      margin-bottom: 6px;
-    }
-
-    .quote {
-      font-size: 24px;
-      letter-spacing: -0.04em;
-      color: var(--ink);
-      font-weight: 760;
-    }
-
-    footer {
-      padding: 40px 22px 80px;
-      text-align: center;
-      color: var(--muted);
-    }
-
-    .modal-backdrop {
-      position: fixed;
-      inset: 0;
-      background: rgba(20, 20, 20, 0.32);
-      backdrop-filter: blur(10px);
-      display: none;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-      z-index: 100;
-    }
-
-    .modal-backdrop.open {
-      display: flex;
-    }
-
-    .capture-shell {
-      width: min(980px, 100%);
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 28px;
-      box-shadow: 0 50px 120px rgba(20, 20, 20, 0.22);
-      overflow: hidden;
-    }
-
-    .popup-top {
-      padding: 16px;
-      border-bottom: 1px solid var(--line);
-      background: var(--surface-soft);
-    }
-
-    .popup-window-row {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin-bottom: 14px;
-    }
-
-    .popup-title {
-      font-weight: 850;
-      letter-spacing: -0.04em;
-    }
-
-    .close-button {
-      border: 1px solid var(--line);
+    .card {
       background: white;
-      border-radius: 999px;
-      padding: 8px 12px;
-      cursor: pointer;
-      font-weight: 750;
-    }
-
-    .popup-capture {
-      width: 100%;
       border: 1px solid var(--line);
       border-radius: 18px;
-      padding: 16px;
-      font-size: 16px;
-      outline: 0;
-      background: white;
-    }
-
-    .spine-bar {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 14px 16px;
-      border-bottom: 1px solid var(--line);
-      background: white;
-    }
-
-    .spine-button {
-      border: 1px solid var(--line);
-      background: var(--surface-soft);
-      color: var(--muted);
-      border-radius: 999px;
-      padding: 9px 14px;
-      font-weight: 800;
-      cursor: pointer;
-      white-space: nowrap;
-      text-transform: uppercase;
-      font-size: 12px;
-      letter-spacing: 0.03em;
-    }
-
-    .spine-button.active {
-      background: var(--ink);
-      color: white;
-      border-color: var(--ink);
-    }
-
-    .popup-body {
-      display: grid;
-      grid-template-columns: 0.9fr 1.1fr;
-      min-height: 390px;
-    }
-
-    .checkbox-panel {
-      padding: 22px;
-      border-right: 1px solid var(--line);
-      background: var(--surface-soft);
-    }
-
-    .checkbox-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 16px;
-    }
-
-    .check-object {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-      border: 1px solid var(--line);
-      background: white;
-      border-radius: 16px;
-      padding: 14px;
-      cursor: pointer;
-    }
-
-    .check-object input {
-      margin-top: 4px;
-      accent-color: var(--ink);
-    }
-
-    .check-object strong {
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .check-object span {
-      color: var(--muted);
-      font-size: 13px;
-    }
-
-    .meaning-preview {
-      padding: 22px;
-      background: white;
-    }
-
-    .preview-box {
-      background: #111827;
-      color: #e5e7eb;
-      border-radius: 20px;
       padding: 20px;
-      min-height: 250px;
-      font-size: 14px;
-      line-height: 1.7;
     }
 
-    .popup-footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 14px;
-      padding: 16px;
-      border-top: 1px solid var(--line);
-      background: var(--surface-soft);
-    }
-
-    .route-note {
-      color: var(--muted);
-      font-size: 14px;
-    }
-
-    .toast {
-      position: fixed;
-      left: 50%;
-      bottom: 28px;
-      transform: translateX(-50%);
-      background: var(--ink);
-      color: white;
-      border-radius: 999px;
-      padding: 12px 18px;
-      box-shadow: var(--shadow);
-      display: none;
-      z-index: 200;
-      font-weight: 750;
-    }
-
-    .toast.show {
-      display: block;
-    }
-
-    @media (max-width: 900px) {
-      .hero,
-      .split,
-      .popup-body {
-        grid-template-columns: 1fr;
-      }
-
-      .grid {
-        grid-template-columns: 1fr;
-      }
-
-      .flow {
-        grid-template-columns: 1fr 1fr;
-      }
-
-      .capture-bar {
-        grid-template-columns: 1fr;
-        border-radius: 20px;
-      }
-
-      .checkbox-panel {
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-      }
+    @media (max-width: 760px) {
+      .grid { grid-template-columns: 1fr; }
     }
   </style>
 </head>
 
 <body>
 
-  <header class="workspace">
-    <div class="workspace-inner">
-      <div class="top-row">
-        <div class="brand">
-          <div class="mark">#</div>
-          <span>top-nav</span>
-        </div>
-        <div class="status">Classification spine for reusable intelligence</div>
-      </div>
+<header>
+  <h1>Seeds before the tree.</h1>
+  <p class="signal">
+    top-nav is the reusable seed pattern for turning captured input into classified, reusable system meaning.
+  </p>
+  <p>
+    It begins with capture. Then a functional spine gives the capture a role.
+    Hashtag objects attach measurable meaning. Submit commits the result for later use.
+  </p>
+</header>
 
-      <div class="capture-bar">
-        <input
-          id="mainCapture"
-          class="capture-input"
-          value="They had the rooms. This gives the rooms grammar."
-          aria-label="Capture input"
-        />
-        <button class="capture-button" id="openCapture">Capture Idea</button>
+<div class="capture-shell">
+  <div class="capture-top">
+    <div class="capture-title">Capture Workspace</div>
+    <input class="capture-input" value="They had the rooms. This gives the rooms grammar." />
+  </div>
+
+  <div class="spine-row" id="spineRow"></div>
+
+  <div class="layer">
+    <div class="eyebrow">Current Layer</div>
+    <h2 id="layerTitle">CAPTURE</h2>
+    <p id="layerText">Raw input enters.</p>
+    <div class="tag-list" id="tagList"></div>
+  </div>
+
+  <div class="selected-bar">
+    <strong>Selected grammar</strong>
+    <div class="pills" id="selectedPills"></div>
+    <button class="submit" id="submit">Submit Capture</button>
+  </div>
+</div>
+
+<main>
+  <section>
+    <h2>Correction</h2>
+    <p>
+      This is not a navbar and not a finished product tree.
+      This is the portable seed layer: capture, classify, attach meaning, measure, and reuse.
+    </p>
+  </section>
+
+  <section>
+    <h2>Functional Spine</h2>
+    <pre><code>CAPTURE    raw input enters
+STRUCTURE  raw input gets shaped
+COORDINATE people, timing, ownership, and movement align
+BUILD      ideas become assets or systems
+EXECUTE    work gets done
+DOCUMENT   decisions and knowledge are preserved
+AGGREGATE  scattered inputs become larger patterns
+IMPROVE    the system learns from itself</code></pre>
+  </section>
+
+  <section>
+    <h2>Core Distinction</h2>
+    <div class="grid">
+      <div class="card">
+        <h3>User Does</h3>
+        <p>Captures input and selects the relevant functional markers.</p>
+      </div>
+      <div class="card">
+        <h3>System Receives</h3>
+        <p>Structured metadata attached to the captured item.</p>
+      </div>
+      <div class="card">
+        <h3>Future Use</h3>
+        <p>The capture becomes searchable, measurable, and reusable.</p>
       </div>
     </div>
-  </header>
+  </section>
 
-  <main>
-    <section class="hero">
-      <div>
-        <h1>Give the rooms grammar.</h1>
-        <p class="signal">
-          top-nav is a universal classification workspace extracted from C10.
-          It turns captured activity into reusable operational intelligence.
-        </p>
-        <p>
-          The system is not a menu. It is a functional spine:
-          Capture, Structure, Coordinate, Build, Execute, Document, Aggregate, Improve.
-          Each layer tells the workspace what kind of activity is happening.
-        </p>
-      </div>
-
-      <div class="demo-window">
-        <div class="demo-spine">
-          <div class="demo-chip on">CAPTURE</div>
-          <div class="demo-chip">STRUCTURE</div>
-          <div class="demo-chip">COORDINATE</div>
-          <div class="demo-chip">BUILD</div>
-        </div>
-
-        <div class="demo-capture">
-          <strong>Captured object</strong><br />
-          <span class="hash">#capture</span> raw signal entering the system
-        </div>
-
-        <div class="demo-card">
-          The interface stays simple. The system receives meaning:
-          what this is, where it belongs, what function it serves,
-          and how it becomes useful again later.
-        </div>
-      </div>
-    </section>
-
-    <section>
-      <span class="label">Object</span>
-      <h2>This is not a navbar.</h2>
-      <p>
-        The visible surface mirrors familiar browser behavior, but the purpose is not navigation decoration.
-        The purpose is classification. The workspace lets a user capture something,
-        mark what function it serves, and submit it into a system that can reuse it later.
-      </p>
-
-      <div class="grid">
-        <div class="card">
-          <h3>User Sees</h3>
-          <p>A capture button, smooth popup, spine layers, checkbox tags, and submit.</p>
-        </div>
-
-        <div class="card">
-          <h3>System Sees</h3>
-          <p>Object type, function, route, state, relationship, and next use.</p>
-        </div>
-
-        <div class="card">
-          <h3>System Learns</h3>
-          <p>What the workspace is doing repeatedly, where friction appears, and what should improve.</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="split">
-      <div>
-        <span class="label">Classification Spine</span>
-        <h2>The eight functions.</h2>
-        <p>
-          These are not tabs in the normal sense. They are the grammar of operational activity.
-          Every captured object can be classified by what it is doing inside the system.
-        </p>
-      </div>
-
-      <pre><code>[ CAPTURE ]    raw input enters
-[ STRUCTURE ]  raw input gets shaped
-[ COORDINATE ] people, timing, ownership, movement align
-[ BUILD ]      ideas become assets or systems
-[ EXECUTE ]    work gets done
-[ DOCUMENT ]   decisions and knowledge are preserved
-[ AGGREGATE ]  scattered inputs become larger patterns
-[ IMPROVE ]    the system learns from itself</code></pre>
-    </section>
-
-    <section class="split">
-      <div>
-        <span class="label">Popup Workspace</span>
-        <h2>The popup is the operating surface.</h2>
-        <p>
-          Pressing Capture Idea opens a compact classification workspace.
-          The top strip behaves like a familiar bookmarks-bar pattern,
-          but each item is a functional layer, not a link.
-        </p>
-      </div>
-
-      <pre><code>Capture Idea
+  <section>
+    <h2>Seed Loop</h2>
+    <pre><code>Input
   ↓
-Classification Popup
+Functional spine
   ↓
-Functional Spine Layer
+Hashtag objects
   ↓
-Hashtag Checkbox Objects
+Selected grammar
   ↓
 Submit
   ↓
-Captured object becomes reusable intelligence</code></pre>
-    </section>
+Reusable record</code></pre>
+  </section>
+</main>
 
-    <section>
-      <span class="label">Closed Loop</span>
-      <h2>From activity to intelligence.</h2>
+<script>
+  const layers = [
+    ["CAPTURE", "Raw input enters.", [["#capture","raw signal"],["#inbox","unsorted intake"],["#signal","notable input"]]],
+    ["STRUCTURE", "Raw input gets shaped.", [["#structure","organized meaning"],["#model","reusable shape"],["#scope","defined boundary"]]],
+    ["COORDINATE", "People, timing, ownership, and movement align.", [["#coordinate","alignment"],["#owner","responsibility"],["#handoff","movement"]]],
+    ["BUILD", "Ideas become assets or systems.", [["#build","creation"],["#asset","reusable output"],["#system","working structure"]]],
+    ["EXECUTE", "Work gets done.", [["#execute","action"],["#task","work item"],["#next","next move"]]],
+    ["DOCUMENT", "Decisions and knowledge are preserved.", [["#document","preserve"],["#decision","recorded choice"],["#learning","reusable lesson"]]],
+    ["AGGREGATE", "Scattered inputs become larger patterns.", [["#aggregate","combine"],["#pattern","repetition"],["#summary","compression"]]],
+    ["IMPROVE", "The system learns from itself.", [["#improve","refinement"],["#friction","slow point"],["#optimize","better path"]]]
+  ];
 
-      <div class="flow">
-        <div class="step"><span>01</span>Capture</div>
-        <div class="step"><span>02</span>Classify</div>
-        <div class="step"><span>03</span>Assign function</div>
-        <div class="step"><span>04</span>Route</div>
-        <div class="step"><span>05</span>Preserve</div>
-        <div class="step"><span>06</span>Retrieve</div>
-        <div class="step"><span>07</span>Aggregate</div>
-        <div class="step"><span>08</span>Improve</div>
-      </div>
-    </section>
+  const spineRow = document.getElementById("spineRow");
+  const tagList = document.getElementById("tagList");
+  const layerTitle = document.getElementById("layerTitle");
+  const layerText = document.getElementById("layerText");
+  const selectedPills = document.getElementById("selectedPills");
 
-    <section>
-      <span class="label">Object Model</span>
-      <h2>Universal schema.</h2>
+  let active = 0;
+  let selected = {};
 
-      <pre><code>type ClassificationWorkspace = {
-  id: string;
-  name: string;
-  captureInput: string;
-  spine: SpineLayer[];
-  selectedLayerId?: string;
-  selectedHashtags: HashtagObject[];
-  memory: WorkspaceMemory;
-};
-
-type SpineLayer = {
-  id: string;
-
-  function:
-    | "capture"
-    | "structure"
-    | "coordinate"
-    | "build"
-    | "execute"
-    | "document"
-    | "aggregate"
-    | "improve";
-
-  purpose: string;
-  hashtags: HashtagObject[];
-};
-
-type HashtagObject = {
-  id: string;
-  tag: string;
-  meaning: string;
-
-  creates:
-    | "classification_value"
-    | "routing_value"
-    | "relationship_value"
-    | "retrieval_value"
-    | "learning_value";
-};
-
-type ClassifiedObject = {
-  id: string;
-  sourceText: string;
-  functions: string[];
-  hashtags: string[];
-  status:
-    | "captured"
-    | "classified"
-    | "routed"
-    | "preserved"
-    | "reused";
-
-  createdAt: string;
-};
-
-type WorkspaceMemory = {
-  recentClassifications: string[];
-  repeatedFunctions: string[];
-  underusedLayers: string[];
-  improvementSignals: string[];
-};</code></pre>
-    </section>
-
-    <section>
-      <span class="label">Deployment Rule</span>
-      <h2>Every object must answer what it is doing.</h2>
-      <p class="quote">
-        They had the rooms.
-        This gives the rooms grammar.
-      </p>
-
-      <div class="grid">
-        <div class="card">
-          <h3>Meaning</h3>
-          <p>What kind of thing is this?</p>
-        </div>
-
-        <div class="card">
-          <h3>Function</h3>
-          <p>What role does it serve inside the system?</p>
-        </div>
-
-        <div class="card">
-          <h3>Reuse</h3>
-          <p>How does it become useful again later?</p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    top-nav is a classification spine for turning captured activity into reusable intelligence.
-  </footer>
-
-  <div class="modal-backdrop" id="captureModal">
-    <div class="capture-shell">
-      <div class="popup-top">
-        <div class="popup-window-row">
-          <div class="popup-title">Classification Workspace</div>
-          <button class="close-button" id="closeCapture">Close</button>
-        </div>
-
-        <input
-          class="popup-capture"
-          id="popupCapture"
-          value="They had the rooms. This gives the rooms grammar."
-        />
-      </div>
-
-      <div class="spine-bar" id="spineBar"></div>
-
-      <div class="popup-body">
-        <div class="checkbox-panel">
-          <span class="label">Hashtag Checkbox Objects</span>
-          <h3 id="layerTitle">Capture</h3>
-          <p id="layerDescription">Raw signal entering the system.</p>
-          <div class="checkbox-list" id="checkboxList"></div>
-        </div>
-
-        <div class="meaning-preview">
-          <span class="label">Meaning Preview</span>
-          <h3>Classified object</h3>
-          <div class="preview-box" id="meaningPreview">
-            Waiting for classification.
-          </div>
-        </div>
-      </div>
-
-      <div class="popup-footer">
-        <div class="route-note" id="routeNote">
-          Select hashtag objects, then submit.
-        </div>
-        <button class="submit-button" id="submitCapture">Submit Capture</button>
-      </div>
-    </div>
-  </div>
-
-  <div class="toast" id="toast">Capture submitted into classification memory.</div>
-
-  <script>
-    const spine = [
-      {
-        id: "capture",
-        label: "CAPTURE",
-        description: "Raw input enters the system.",
-        hashtags: [
-          ["#capture", "Raw signal entering the system"],
-          ["#inbox", "Unsorted intake needing later handling"],
-          ["#signal", "Potentially useful input worth preserving"]
-        ]
-      },
-      {
-        id: "structure",
-        label: "STRUCTURE",
-        description: "Raw input gets shaped into usable form.",
-        hashtags: [
-          ["#structure", "Meaning is being organized"],
-          ["#model", "A reusable model is forming"],
-          ["#scope", "Boundaries and definitions are being clarified"]
-        ]
-      },
-      {
-        id: "coordinate",
-        label: "COORDINATE",
-        description: "People, timing, ownership, and movement align.",
-        hashtags: [
-          ["#coordinate", "Movement between people or parts"],
-          ["#owner", "Responsibility needs assignment"],
-          ["#handoff", "Work needs transfer or sequencing"]
-        ]
-      },
-      {
-        id: "build",
-        label: "BUILD",
-        description: "Ideas become assets, systems, or outputs.",
-        hashtags: [
-          ["#build", "Something is being made"],
-          ["#asset", "Reusable output is being created"],
-          ["#system", "A working structure is being assembled"]
-        ]
-      },
-      {
-        id: "execute",
-        label: "EXECUTE",
-        description: "Work gets done.",
-        hashtags: [
-          ["#execute", "Action is required"],
-          ["#task", "Concrete work item"],
-          ["#next", "Next move to perform"]
-        ]
-      },
-      {
-        id: "document",
-        label: "DOCUMENT",
-        description: "Decisions and knowledge are preserved.",
-        hashtags: [
-          ["#document", "Knowledge should be preserved"],
-          ["#decision", "Decision should be recorded"],
-          ["#learning", "Reusable lesson or insight"]
-        ]
-      },
-      {
-        id: "aggregate",
-        label: "AGGREGATE",
-        description: "Scattered inputs become larger patterns.",
-        hashtags: [
-          ["#aggregate", "Multiple inputs should be combined"],
-          ["#pattern", "Repeated signal detected"],
-          ["#summary", "Condensed view should be created"]
-        ]
-      },
-      {
-        id: "improve",
-        label: "IMPROVE",
-        description: "The system learns from itself.",
-        hashtags: [
-          ["#improve", "System behavior should be refined"],
-          ["#friction", "Something is slowing the system down"],
-          ["#optimize", "Better default or path is needed"]
-        ]
-      }
-    ];
-
-    const modal = document.getElementById("captureModal");
-    const openButton = document.getElementById("openCapture");
-    const closeButton = document.getElementById("closeCapture");
-    const mainCapture = document.getElementById("mainCapture");
-    const popupCapture = document.getElementById("popupCapture");
-    const spineBar = document.getElementById("spineBar");
-    const checkboxList = document.getElementById("checkboxList");
-    const layerTitle = document.getElementById("layerTitle");
-    const layerDescription = document.getElementById("layerDescription");
-    const meaningPreview = document.getElementById("meaningPreview");
-    const routeNote = document.getElementById("routeNote");
-    const toast = document.getElementById("toast");
-
-    let activeLayer = spine[0];
-    let selectedTags = [];
-
-    function renderSpine() {
-      spineBar.innerHTML = "";
-
-      spine.forEach(layer => {
-        const button = document.createElement("button");
-        button.className = "spine-button" + (layer.id === activeLayer.id ? " active" : "");
-        button.textContent = layer.label;
-
-        button.addEventListener("click", () => {
-          activeLayer = layer;
-          selectedTags = [];
-          renderSpine();
-          renderLayer();
-        });
-
-        spineBar.appendChild(button);
-      });
-    }
-
-    function renderLayer() {
-      layerTitle.textContent = activeLayer.label;
-      layerDescription.textContent = activeLayer.description;
-      checkboxList.innerHTML = "";
-
-      activeLayer.hashtags.forEach(([tag, meaning]) => {
-        const label = document.createElement("label");
-        label.className = "check-object";
-
-        label.innerHTML = `
-          <input type="checkbox" value="${tag}" data-meaning="${meaning}">
-          <div>
-            <strong>${tag}</strong>
-            <span>${meaning}</span>
-          </div>
-        `;
-
-        label.querySelector("input").addEventListener("change", updatePreview);
-        checkboxList.appendChild(label);
-      });
-
-      updatePreview();
-    }
-
-    function updatePreview() {
-      selectedTags = Array.from(checkboxList.querySelectorAll("input:checked")).map(input => ({
-        tag: input.value,
-        meaning: input.dataset.meaning
-      }));
-
-      const tags = selectedTags.map(item => item.tag).join(", ") || "none selected";
-      const meanings = selectedTags.map(item => `• ${item.tag}: ${item.meaning}`).join("<br>") || "No hashtag objects selected yet.";
-
-      meaningPreview.innerHTML = `
-        SourceText: ${popupCapture.value}<br><br>
-        SpineLayer: ${activeLayer.label}<br>
-        Function: ${activeLayer.description}<br>
-        HashtagObjects: ${tags}<br><br>
-        Meaning:<br>${meanings}<br><br>
-        Output: classified object ready for submission.
-      `;
-
-      routeNote.textContent = selectedTags.length
-        ? "Ready to submit into classification memory."
-        : "Select hashtag objects, then submit.";
-    }
-
-    openButton.addEventListener("click", () => {
-      popupCapture.value = mainCapture.value;
-      modal.classList.add("open");
-      renderSpine();
-      renderLayer();
+  function render() {
+    spineRow.innerHTML = "";
+    layers.forEach((layer, index) => {
+      const btn = document.createElement("button");
+      btn.className = "spine" + (index === active ? " active" : "");
+      btn.textContent = layer[0];
+      btn.onclick = () => { active = index; render(); };
+      spineRow.appendChild(btn);
     });
 
-    closeButton.addEventListener("click", () => {
-      modal.classList.remove("open");
+    layerTitle.textContent = layers[active][0];
+    layerText.textContent = layers[active][1];
+
+    tagList.innerHTML = "";
+    layers[active][2].forEach(([tag, meaning]) => {
+      const item = document.createElement("div");
+      item.className = "tag" + (selected[tag] ? " selected" : "");
+      item.innerHTML = `<strong>${tag}</strong><span>${meaning}</span>`;
+      item.onclick = () => {
+        selected[tag] ? delete selected[tag] : selected[tag] = meaning;
+        render();
+      };
+      tagList.appendChild(item);
     });
 
-    modal.addEventListener("click", event => {
-      if (event.target === modal) modal.classList.remove("open");
-    });
+    selectedPills.innerHTML = Object.keys(selected).length
+      ? Object.keys(selected).map(tag => `<div class="pill">${tag}</div>`).join("")
+      : `<div class="pill">none selected</div>`;
+  }
 
-    popupCapture.addEventListener("input", updatePreview);
+  document.getElementById("submit").onclick = () => {
+    alert("Capture submitted with: " + Object.keys(selected).join(", "));
+  };
 
-    document.getElementById("submitCapture").addEventListener("click", () => {
-      if (!selectedTags.length) {
-        routeNote.textContent = "Select at least one hashtag object before submitting.";
-        return;
-      }
-
-      modal.classList.remove("open");
-      toast.classList.add("show");
-
-      setTimeout(() => {
-        toast.classList.remove("show");
-      }, 2200);
-    });
-
-    renderSpine();
-    renderLayer();
-  </script>
+  render();
+</script>
 
 </body>
 </html>
