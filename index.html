@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>top-nav — Capture Workspace</title>
+  <title>top-nav — Classification Spine</title>
 
   <style>
     :root {
@@ -13,7 +13,6 @@
       --ink: #171717;
       --muted: #6f6f68;
       --line: #e6e2d8;
-      --accent: #111827;
       --blue: #2563eb;
       --green: #16a34a;
       --orange: #ea580c;
@@ -33,6 +32,10 @@
       line-height: 1.55;
     }
 
+    button, input {
+      font: inherit;
+    }
+
     .workspace {
       position: sticky;
       top: 0;
@@ -50,9 +53,8 @@
 
     .top-row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      align-items: center;
       margin-bottom: 12px;
     }
 
@@ -107,7 +109,7 @@
       background: var(--ink);
       color: white;
       padding: 10px 18px;
-      font-weight: 700;
+      font-weight: 750;
       cursor: pointer;
     }
 
@@ -155,7 +157,25 @@
       color: var(--ink);
       font-size: 21px;
       font-weight: 720;
-      max-width: 820px;
+    }
+
+    section {
+      padding: 56px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .label {
+      display: inline-flex;
+      border-radius: 999px;
+      padding: 5px 10px;
+      font-size: 12px;
+      font-weight: 800;
+      background: var(--surface-soft);
+      border: 1px solid var(--line);
+      color: var(--muted);
+      margin-bottom: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
     }
 
     .demo-window {
@@ -166,14 +186,14 @@
       box-shadow: 0 40px 90px rgba(17, 24, 39, 0.28);
     }
 
-    .mini-bar {
+    .demo-spine {
       display: flex;
       gap: 8px;
-      margin-bottom: 14px;
       overflow-x: auto;
+      margin-bottom: 14px;
     }
 
-    .mini-folder {
+    .demo-chip {
       background: #1f2937;
       color: #cbd5e1;
       padding: 9px 12px;
@@ -182,7 +202,7 @@
       white-space: nowrap;
     }
 
-    .mini-folder.on {
+    .demo-chip.on {
       background: white;
       color: #111827;
     }
@@ -207,25 +227,6 @@
       padding: 16px;
       color: #d1d5db;
       font-size: 14px;
-    }
-
-    section {
-      padding: 56px 0;
-      border-top: 1px solid var(--line);
-    }
-
-    .label {
-      display: inline-flex;
-      border-radius: 999px;
-      padding: 5px 10px;
-      font-size: 12px;
-      font-weight: 800;
-      background: var(--surface-soft);
-      border: 1px solid var(--line);
-      color: var(--muted);
-      margin-bottom: 12px;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
     }
 
     .grid {
@@ -261,7 +262,7 @@
 
     .flow {
       display: grid;
-      grid-template-columns: repeat(6, 1fr);
+      grid-template-columns: repeat(8, 1fr);
       gap: 10px;
       margin-top: 24px;
     }
@@ -270,17 +271,16 @@
       background: var(--surface);
       border: 1px solid var(--line);
       border-radius: 16px;
-      padding: 16px;
-      font-size: 14px;
-      font-weight: 700;
-      min-height: 96px;
+      padding: 14px;
+      font-size: 13px;
+      font-weight: 750;
+      min-height: 92px;
     }
 
     .step span {
       display: block;
       color: var(--muted);
-      font-size: 12px;
-      font-weight: 600;
+      font-size: 11px;
       margin-bottom: 6px;
     }
 
@@ -314,7 +314,7 @@
     }
 
     .capture-shell {
-      width: min(920px, 100%);
+      width: min(980px, 100%);
       background: var(--surface);
       border: 1px solid var(--line);
       border-radius: 28px;
@@ -330,14 +330,14 @@
 
     .popup-window-row {
       display: flex;
-      align-items: center;
       justify-content: space-between;
+      align-items: center;
       margin-bottom: 14px;
     }
 
     .popup-title {
-      font-weight: 800;
-      letter-spacing: -0.03em;
+      font-weight: 850;
+      letter-spacing: -0.04em;
     }
 
     .close-button {
@@ -346,7 +346,7 @@
       border-radius: 999px;
       padding: 8px 12px;
       cursor: pointer;
-      font-weight: 700;
+      font-weight: 750;
     }
 
     .popup-capture {
@@ -359,7 +359,7 @@
       background: white;
     }
 
-    .primary-layer-bar {
+    .spine-bar {
       display: flex;
       gap: 8px;
       overflow-x: auto;
@@ -368,18 +368,21 @@
       background: white;
     }
 
-    .layer-button {
+    .spine-button {
       border: 1px solid var(--line);
       background: var(--surface-soft);
       color: var(--muted);
       border-radius: 999px;
       padding: 9px 14px;
-      font-weight: 750;
+      font-weight: 800;
       cursor: pointer;
       white-space: nowrap;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.03em;
     }
 
-    .layer-button.active {
+    .spine-button.active {
       background: var(--ink);
       color: white;
       border-color: var(--ink);
@@ -388,24 +391,25 @@
     .popup-body {
       display: grid;
       grid-template-columns: 0.9fr 1.1fr;
-      gap: 0;
-      min-height: 360px;
+      min-height: 390px;
     }
 
-    .tab-object-panel {
+    .checkbox-panel {
       padding: 22px;
       border-right: 1px solid var(--line);
       background: var(--surface-soft);
     }
 
-    .object-list {
+    .checkbox-list {
       display: grid;
       gap: 10px;
       margin-top: 16px;
     }
 
-    .object-button {
-      text-align: left;
+    .check-object {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
       border: 1px solid var(--line);
       background: white;
       border-radius: 16px;
@@ -413,22 +417,22 @@
       cursor: pointer;
     }
 
-    .object-button.active {
-      border-color: var(--ink);
-      box-shadow: inset 0 0 0 1px var(--ink);
+    .check-object input {
+      margin-top: 4px;
+      accent-color: var(--ink);
     }
 
-    .object-button strong {
+    .check-object strong {
       display: block;
       margin-bottom: 4px;
     }
 
-    .object-button span {
+    .check-object span {
       color: var(--muted);
       font-size: 13px;
     }
 
-    .route-preview {
+    .meaning-preview {
       padding: 22px;
       background: white;
     }
@@ -438,7 +442,7 @@
       color: #e5e7eb;
       border-radius: 20px;
       padding: 20px;
-      min-height: 230px;
+      min-height: 250px;
       font-size: 14px;
       line-height: 1.7;
     }
@@ -458,7 +462,26 @@
       font-size: 14px;
     }
 
-    @media (max-width: 880px) {
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 28px;
+      transform: translateX(-50%);
+      background: var(--ink);
+      color: white;
+      border-radius: 999px;
+      padding: 12px 18px;
+      box-shadow: var(--shadow);
+      display: none;
+      z-index: 200;
+      font-weight: 750;
+    }
+
+    .toast.show {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
       .hero,
       .split,
       .popup-body {
@@ -478,11 +501,7 @@
         border-radius: 20px;
       }
 
-      .capture-button {
-        width: 100%;
-      }
-
-      .tab-object-panel {
+      .checkbox-panel {
         border-right: 0;
         border-bottom: 1px solid var(--line);
       }
@@ -499,14 +518,14 @@
           <div class="mark">#</div>
           <span>top-nav</span>
         </div>
-        <div class="status">Universal capture-navigation workspace</div>
+        <div class="status">Classification spine for reusable intelligence</div>
       </div>
 
       <div class="capture-bar">
         <input
           id="mainCapture"
           class="capture-input"
-          value="#idea turn browser-like capture into a reusable workspace system"
+          value="They had the rooms. This gives the rooms grammar."
           aria-label="Capture input"
         />
         <button class="capture-button" id="openCapture">Capture Idea</button>
@@ -515,399 +534,442 @@
   </header>
 
   <main>
-    <section class="hero" id="overview">
+    <section class="hero">
       <div>
-        <h1>Capture first. Navigate always.</h1>
+        <h1>Give the rooms grammar.</h1>
         <p class="signal">
-          top-nav is a universal workspace pattern that turns capture,
-          primary layers, #Tab Objects, routing, and memory into one reusable operating layer.
+          top-nav is a universal classification workspace extracted from C10.
+          It turns captured activity into reusable operational intelligence.
         </p>
         <p>
-          It is extracted from C10, but it is not limited to C10.
-          It can be applied to any system that needs fast capture, clean routing,
-          object destinations, and self-improving workspace structure.
+          The system is not a menu. It is a functional spine:
+          Capture, Structure, Coordinate, Build, Execute, Document, Aggregate, Improve.
+          Each layer tells the workspace what kind of activity is happening.
         </p>
       </div>
 
       <div class="demo-window">
-        <div class="mini-bar">
-          <div class="mini-folder on">Capture</div>
-          <div class="mini-folder">Work</div>
-          <div class="mini-folder">Systems</div>
-          <div class="mini-folder">Archive</div>
+        <div class="demo-spine">
+          <div class="demo-chip on">CAPTURE</div>
+          <div class="demo-chip">STRUCTURE</div>
+          <div class="demo-chip">COORDINATE</div>
+          <div class="demo-chip">BUILD</div>
         </div>
 
         <div class="demo-capture">
-          <strong>Captured input</strong><br />
-          <span class="hash">#idea</span> define reusable capture-routing model
+          <strong>Captured object</strong><br />
+          <span class="hash">#capture</span> raw signal entering the system
         </div>
 
         <div class="demo-card">
-          The popup reads the capture, lets the user choose a primary layer,
-          exposes available #Tab Objects, then commits the object to its route.
+          The interface stays simple. The system receives meaning:
+          what this is, where it belongs, what function it serves,
+          and how it becomes useful again later.
         </div>
       </div>
     </section>
 
     <section>
-      <span class="label">Correction</span>
+      <span class="label">Object</span>
       <h2>This is not a navbar.</h2>
       <p>
-        The visible interface is a capture shell. It behaves like a mini browser:
-        primary layers sit across the top, and each layer exposes #Tab Objects
-        that route captured work.
+        The visible surface mirrors familiar browser behavior, but the purpose is not navigation decoration.
+        The purpose is classification. The workspace lets a user capture something,
+        mark what function it serves, and submit it into a system that can reuse it later.
       </p>
 
       <div class="grid">
         <div class="card">
           <h3>User Sees</h3>
-          <p>A capture button, clean popup, primary layers, and selectable #Tab Objects.</p>
+          <p>A capture button, smooth popup, spine layers, checkbox tags, and submit.</p>
         </div>
 
         <div class="card">
           <h3>System Sees</h3>
-          <p>Capture intent, object type, route, relationship, priority, and state.</p>
+          <p>Object type, function, route, state, relationship, and next use.</p>
         </div>
 
         <div class="card">
-          <h3>System Improves</h3>
-          <p>Repeated routes, useful destinations, ignored layers, and better defaults.</p>
+          <h3>System Learns</h3>
+          <p>What the workspace is doing repeatedly, where friction appears, and what should improve.</p>
         </div>
       </div>
     </section>
 
     <section class="split">
       <div>
-        <span class="label">Popup Model</span>
-        <h2>The popup is the workspace.</h2>
+        <span class="label">Classification Spine</span>
+        <h2>The eight functions.</h2>
         <p>
-          The main page stays clean. The capture action opens the operating surface:
-          a compact workspace for classifying, routing, and submitting the captured object.
+          These are not tabs in the normal sense. They are the grammar of operational activity.
+          Every captured object can be classified by what it is doing inside the system.
         </p>
       </div>
 
-      <pre><code>Capture Button
-  ↓
-Popup Workspace
-  ↓
-Primary Layer Bar
-  ↓
-#Tab Object Choices
-  ↓
-Route Preview
-  ↓
-Submit Capture</code></pre>
+      <pre><code>[ CAPTURE ]    raw input enters
+[ STRUCTURE ]  raw input gets shaped
+[ COORDINATE ] people, timing, ownership, movement align
+[ BUILD ]      ideas become assets or systems
+[ EXECUTE ]    work gets done
+[ DOCUMENT ]   decisions and knowledge are preserved
+[ AGGREGATE ]  scattered inputs become larger patterns
+[ IMPROVE ]    the system learns from itself</code></pre>
     </section>
 
     <section class="split">
       <div>
-        <span class="label">Primary Layers</span>
-        <h2>Layers organize the capture space.</h2>
+        <span class="label">Popup Workspace</span>
+        <h2>The popup is the operating surface.</h2>
         <p>
-          Primary layers behave like a familiar bookmarks-bar pattern,
-          but they are not links. They are capture categories that expose
-          valid object destinations.
+          Pressing Capture Idea opens a compact classification workspace.
+          The top strip behaves like a familiar bookmarks-bar pattern,
+          but each item is a functional layer, not a link.
         </p>
       </div>
 
-      <pre><code>PrimaryLayer = {
-  label: "Systems",
-  purpose: "organize system-level captures",
-  exposes: ["#model", "#loop", "#spec", "#pattern"]
-}</code></pre>
-    </section>
-
-    <section class="split">
-      <div>
-        <span class="label">#Tab Objects</span>
-        <h2>#Tabs are routing destinations.</h2>
-        <p>
-          A #Tab Object is not a menu item. It tells the system where the captured
-          object belongs and what kind of operational value it should create.
-        </p>
-      </div>
-
-      <pre><code>#idea     → route to idea object
-#task     → route to action object
-#model    → route to system model
-#loop     → route to feedback loop
-#archive  → route to stored memory</code></pre>
+      <pre><code>Capture Idea
+  ↓
+Classification Popup
+  ↓
+Functional Spine Layer
+  ↓
+Hashtag Checkbox Objects
+  ↓
+Submit
+  ↓
+Captured object becomes reusable intelligence</code></pre>
     </section>
 
     <section>
       <span class="label">Closed Loop</span>
-      <h2>Show and tell in one interface.</h2>
-      <p>
-        The popup shows simple choices while telling the system how to classify,
-        route, remember, and improve the captured item.
-      </p>
+      <h2>From activity to intelligence.</h2>
 
       <div class="flow">
         <div class="step"><span>01</span>Capture</div>
-        <div class="step"><span>02</span>Open popup</div>
-        <div class="step"><span>03</span>Select layer</div>
-        <div class="step"><span>04</span>Choose #Tab</div>
-        <div class="step"><span>05</span>Submit route</div>
-        <div class="step"><span>06</span>Improve memory</div>
+        <div class="step"><span>02</span>Classify</div>
+        <div class="step"><span>03</span>Assign function</div>
+        <div class="step"><span>04</span>Route</div>
+        <div class="step"><span>05</span>Preserve</div>
+        <div class="step"><span>06</span>Retrieve</div>
+        <div class="step"><span>07</span>Aggregate</div>
+        <div class="step"><span>08</span>Improve</div>
       </div>
     </section>
 
     <section>
-      <span class="label">Core Schema</span>
-      <h2>Universal workspace object model.</h2>
+      <span class="label">Object Model</span>
+      <h2>Universal schema.</h2>
 
-      <pre><code>type CaptureShell = {
+      <pre><code>type ClassificationWorkspace = {
   id: string;
   name: string;
   captureInput: string;
-  primaryLayers: PrimaryLayer[];
-  activeLayerId?: string;
-  selectedTabObjectId?: string;
+  spine: SpineLayer[];
+  selectedLayerId?: string;
+  selectedHashtags: HashtagObject[];
   memory: WorkspaceMemory;
 };
 
-type PrimaryLayer = {
+type SpineLayer = {
   id: string;
-  label: string;
+
+  function:
+    | "capture"
+    | "structure"
+    | "coordinate"
+    | "build"
+    | "execute"
+    | "document"
+    | "aggregate"
+    | "improve";
+
   purpose: string;
-  tabObjects: TabObject[];
-  order: number;
+  hashtags: HashtagObject[];
 };
 
-type TabObject = {
+type HashtagObject = {
   id: string;
-  label: string;
-  hashtag: string;
-  route: string;
-
-  objectType:
-    | "idea"
-    | "task"
-    | "note"
-    | "project"
-    | "system"
-    | "archive";
+  tag: string;
+  meaning: string;
 
   creates:
+    | "classification_value"
     | "routing_value"
     | "relationship_value"
-    | "learning_value"
-    | "operational_value";
-
-  state:
-    | "available"
-    | "selected"
-    | "hidden"
-    | "archived";
+    | "retrieval_value"
+    | "learning_value";
 };
 
-type RoutedCapture = {
+type ClassifiedObject = {
   id: string;
   sourceText: string;
-  primaryLayerId: string;
-  tabObjectId: string;
-  route: string;
+  functions: string[];
+  hashtags: string[];
   status:
-    | "draft"
-    | "submitted"
+    | "captured"
+    | "classified"
     | "routed"
-    | "remembered";
+    | "preserved"
+    | "reused";
+
+  createdAt: string;
 };
 
 type WorkspaceMemory = {
-  recentRoutes: string[];
-  repeatedDestinations: string[];
-  ignoredLayers: string[];
-  promotedTabObjects: string[];
+  recentClassifications: string[];
+  repeatedFunctions: string[];
+  underusedLayers: string[];
+  improvementSignals: string[];
 };</code></pre>
     </section>
 
     <section>
       <span class="label">Deployment Rule</span>
-      <h2>Every capture must land somewhere useful.</h2>
+      <h2>Every object must answer what it is doing.</h2>
       <p class="quote">
-        Primary layers organize the capture space.
-        #Tab Objects route the captured object.
-        Submit commits the object into memory.
+        They had the rooms.
+        This gives the rooms grammar.
       </p>
 
       <div class="grid">
         <div class="card">
-          <h3>Routing Value</h3>
-          <p>Where should this captured object go?</p>
+          <h3>Meaning</h3>
+          <p>What kind of thing is this?</p>
         </div>
 
         <div class="card">
-          <h3>Relationship Value</h3>
-          <p>What is this connected to?</p>
+          <h3>Function</h3>
+          <p>What role does it serve inside the system?</p>
         </div>
 
         <div class="card">
-          <h3>Learning Value</h3>
-          <p>What should the workspace remember next time?</p>
+          <h3>Reuse</h3>
+          <p>How does it become useful again later?</p>
         </div>
       </div>
     </section>
   </main>
 
   <footer>
-    top-nav is a universal capture-routing workspace pattern.
+    top-nav is a classification spine for turning captured activity into reusable intelligence.
   </footer>
 
   <div class="modal-backdrop" id="captureModal">
     <div class="capture-shell">
       <div class="popup-top">
         <div class="popup-window-row">
-          <div class="popup-title">Capture Workspace</div>
+          <div class="popup-title">Classification Workspace</div>
           <button class="close-button" id="closeCapture">Close</button>
         </div>
 
         <input
           class="popup-capture"
           id="popupCapture"
-          value="#idea turn browser-like capture into a reusable workspace system"
+          value="They had the rooms. This gives the rooms grammar."
         />
       </div>
 
-      <div class="primary-layer-bar">
-        <button class="layer-button active" data-layer="capture">Capture</button>
-        <button class="layer-button" data-layer="work">Work</button>
-        <button class="layer-button" data-layer="systems">Systems</button>
-        <button class="layer-button" data-layer="memory">Memory</button>
-      </div>
+      <div class="spine-bar" id="spineBar"></div>
 
       <div class="popup-body">
-        <div class="tab-object-panel">
-          <span class="label">#Tab Objects</span>
-          <h3 id="layerTitle">Capture Layer</h3>
-          <p id="layerDescription">
-            Choose where this captured idea should become a system object.
-          </p>
-
-          <div class="object-list" id="objectList"></div>
+        <div class="checkbox-panel">
+          <span class="label">Hashtag Checkbox Objects</span>
+          <h3 id="layerTitle">Capture</h3>
+          <p id="layerDescription">Raw signal entering the system.</p>
+          <div class="checkbox-list" id="checkboxList"></div>
         </div>
 
-        <div class="route-preview">
-          <span class="label">Route Preview</span>
-          <h3>Selected capture route</h3>
-
-          <div class="preview-box" id="routePreview">
-            CaptureIntent detected.<br />
-            Waiting for #Tab Object selection.
+        <div class="meaning-preview">
+          <span class="label">Meaning Preview</span>
+          <h3>Classified object</h3>
+          <div class="preview-box" id="meaningPreview">
+            Waiting for classification.
           </div>
         </div>
       </div>
 
       <div class="popup-footer">
         <div class="route-note" id="routeNote">
-          Select a primary layer and #Tab Object before submitting.
+          Select hashtag objects, then submit.
         </div>
         <button class="submit-button" id="submitCapture">Submit Capture</button>
       </div>
     </div>
   </div>
 
+  <div class="toast" id="toast">Capture submitted into classification memory.</div>
+
   <script>
+    const spine = [
+      {
+        id: "capture",
+        label: "CAPTURE",
+        description: "Raw input enters the system.",
+        hashtags: [
+          ["#capture", "Raw signal entering the system"],
+          ["#inbox", "Unsorted intake needing later handling"],
+          ["#signal", "Potentially useful input worth preserving"]
+        ]
+      },
+      {
+        id: "structure",
+        label: "STRUCTURE",
+        description: "Raw input gets shaped into usable form.",
+        hashtags: [
+          ["#structure", "Meaning is being organized"],
+          ["#model", "A reusable model is forming"],
+          ["#scope", "Boundaries and definitions are being clarified"]
+        ]
+      },
+      {
+        id: "coordinate",
+        label: "COORDINATE",
+        description: "People, timing, ownership, and movement align.",
+        hashtags: [
+          ["#coordinate", "Movement between people or parts"],
+          ["#owner", "Responsibility needs assignment"],
+          ["#handoff", "Work needs transfer or sequencing"]
+        ]
+      },
+      {
+        id: "build",
+        label: "BUILD",
+        description: "Ideas become assets, systems, or outputs.",
+        hashtags: [
+          ["#build", "Something is being made"],
+          ["#asset", "Reusable output is being created"],
+          ["#system", "A working structure is being assembled"]
+        ]
+      },
+      {
+        id: "execute",
+        label: "EXECUTE",
+        description: "Work gets done.",
+        hashtags: [
+          ["#execute", "Action is required"],
+          ["#task", "Concrete work item"],
+          ["#next", "Next move to perform"]
+        ]
+      },
+      {
+        id: "document",
+        label: "DOCUMENT",
+        description: "Decisions and knowledge are preserved.",
+        hashtags: [
+          ["#document", "Knowledge should be preserved"],
+          ["#decision", "Decision should be recorded"],
+          ["#learning", "Reusable lesson or insight"]
+        ]
+      },
+      {
+        id: "aggregate",
+        label: "AGGREGATE",
+        description: "Scattered inputs become larger patterns.",
+        hashtags: [
+          ["#aggregate", "Multiple inputs should be combined"],
+          ["#pattern", "Repeated signal detected"],
+          ["#summary", "Condensed view should be created"]
+        ]
+      },
+      {
+        id: "improve",
+        label: "IMPROVE",
+        description: "The system learns from itself.",
+        hashtags: [
+          ["#improve", "System behavior should be refined"],
+          ["#friction", "Something is slowing the system down"],
+          ["#optimize", "Better default or path is needed"]
+        ]
+      }
+    ];
+
     const modal = document.getElementById("captureModal");
     const openButton = document.getElementById("openCapture");
     const closeButton = document.getElementById("closeCapture");
     const mainCapture = document.getElementById("mainCapture");
     const popupCapture = document.getElementById("popupCapture");
-    const objectList = document.getElementById("objectList");
-    const routePreview = document.getElementById("routePreview");
-    const routeNote = document.getElementById("routeNote");
+    const spineBar = document.getElementById("spineBar");
+    const checkboxList = document.getElementById("checkboxList");
     const layerTitle = document.getElementById("layerTitle");
     const layerDescription = document.getElementById("layerDescription");
+    const meaningPreview = document.getElementById("meaningPreview");
+    const routeNote = document.getElementById("routeNote");
+    const toast = document.getElementById("toast");
 
-    const layers = {
-      capture: {
-        title: "Capture Layer",
-        description: "Fast intake destinations for raw thoughts before they become structured work.",
-        objects: [
-          ["#idea", "Idea Object", "/capture/ideas"],
-          ["#note", "Knowledge Object", "/capture/notes"],
-          ["#inbox", "Unsorted Capture", "/capture/inbox"]
-        ]
-      },
-      work: {
-        title: "Work Layer",
-        description: "Operational destinations for tasks, projects, decisions, and active work.",
-        objects: [
-          ["#task", "Action Object", "/work/tasks"],
-          ["#project", "Project Object", "/work/projects"],
-          ["#decision", "Decision Object", "/work/decisions"]
-        ]
-      },
-      systems: {
-        title: "Systems Layer",
-        description: "Architecture destinations for models, loops, specs, and reusable patterns.",
-        objects: [
-          ["#model", "System Model", "/systems/models"],
-          ["#loop", "Feedback Loop", "/systems/loops"],
-          ["#spec", "Specification Object", "/systems/specs"]
-        ]
-      },
-      memory: {
-        title: "Memory Layer",
-        description: "Storage destinations for archived, repeated, or remembered workspace behavior.",
-        objects: [
-          ["#archive", "Archived Object", "/memory/archive"],
-          ["#pattern", "Pattern Memory", "/memory/patterns"],
-          ["#history", "Route History", "/memory/history"]
-        ]
-      }
-    };
+    let activeLayer = spine[0];
+    let selectedTags = [];
 
-    let activeLayer = "capture";
-    let selectedObject = null;
+    function renderSpine() {
+      spineBar.innerHTML = "";
 
-    function renderLayer(layerKey) {
-      const layer = layers[layerKey];
-      activeLayer = layerKey;
-      selectedObject = null;
-
-      layerTitle.textContent = layer.title;
-      layerDescription.textContent = layer.description;
-      objectList.innerHTML = "";
-
-      layer.objects.forEach(([tag, name, route]) => {
+      spine.forEach(layer => {
         const button = document.createElement("button");
-        button.className = "object-button";
-        button.innerHTML = `<strong>${tag}</strong><span>${name} → ${route}</span>`;
+        button.className = "spine-button" + (layer.id === activeLayer.id ? " active" : "");
+        button.textContent = layer.label;
 
         button.addEventListener("click", () => {
-          document.querySelectorAll(".object-button").forEach(btn => btn.classList.remove("active"));
-          button.classList.add("active");
-          selectedObject = { tag, name, route };
-
-          routePreview.innerHTML = `
-            CaptureIntent detected.<br />
-            PrimaryLayer: ${layer.title}<br />
-            TabObject: ${tag}<br />
-            ObjectType: ${name}<br />
-            Route: ${route}<br /><br />
-            SourceText: ${popupCapture.value}
-          `;
-
-          routeNote.textContent = `${tag} selected. Ready to submit into ${route}.`;
+          activeLayer = layer;
+          selectedTags = [];
+          renderSpine();
+          renderLayer();
         });
 
-        objectList.appendChild(button);
+        spineBar.appendChild(button);
+      });
+    }
+
+    function renderLayer() {
+      layerTitle.textContent = activeLayer.label;
+      layerDescription.textContent = activeLayer.description;
+      checkboxList.innerHTML = "";
+
+      activeLayer.hashtags.forEach(([tag, meaning]) => {
+        const label = document.createElement("label");
+        label.className = "check-object";
+
+        label.innerHTML = `
+          <input type="checkbox" value="${tag}" data-meaning="${meaning}">
+          <div>
+            <strong>${tag}</strong>
+            <span>${meaning}</span>
+          </div>
+        `;
+
+        label.querySelector("input").addEventListener("change", updatePreview);
+        checkboxList.appendChild(label);
       });
 
-      routePreview.innerHTML = `
-        CaptureIntent detected.<br />
-        PrimaryLayer: ${layer.title}<br />
-        Waiting for #Tab Object selection.
+      updatePreview();
+    }
+
+    function updatePreview() {
+      selectedTags = Array.from(checkboxList.querySelectorAll("input:checked")).map(input => ({
+        tag: input.value,
+        meaning: input.dataset.meaning
+      }));
+
+      const tags = selectedTags.map(item => item.tag).join(", ") || "none selected";
+      const meanings = selectedTags.map(item => `• ${item.tag}: ${item.meaning}`).join("<br>") || "No hashtag objects selected yet.";
+
+      meaningPreview.innerHTML = `
+        SourceText: ${popupCapture.value}<br><br>
+        SpineLayer: ${activeLayer.label}<br>
+        Function: ${activeLayer.description}<br>
+        HashtagObjects: ${tags}<br><br>
+        Meaning:<br>${meanings}<br><br>
+        Output: classified object ready for submission.
       `;
 
-      routeNote.textContent = "Select a #Tab Object before submitting.";
+      routeNote.textContent = selectedTags.length
+        ? "Ready to submit into classification memory."
+        : "Select hashtag objects, then submit.";
     }
 
     openButton.addEventListener("click", () => {
       popupCapture.value = mainCapture.value;
       modal.classList.add("open");
-      renderLayer(activeLayer);
+      renderSpine();
+      renderLayer();
     });
 
     closeButton.addEventListener("click", () => {
@@ -915,29 +977,27 @@ type WorkspaceMemory = {
     });
 
     modal.addEventListener("click", event => {
-      if (event.target === modal) {
-        modal.classList.remove("open");
-      }
+      if (event.target === modal) modal.classList.remove("open");
     });
 
-    document.querySelectorAll(".layer-button").forEach(button => {
-      button.addEventListener("click", () => {
-        document.querySelectorAll(".layer-button").forEach(btn => btn.classList.remove("active"));
-        button.classList.add("active");
-        renderLayer(button.dataset.layer);
-      });
-    });
+    popupCapture.addEventListener("input", updatePreview);
 
     document.getElementById("submitCapture").addEventListener("click", () => {
-      if (!selectedObject) {
-        routeNote.textContent = "Choose a #Tab Object first.";
+      if (!selectedTags.length) {
+        routeNote.textContent = "Select at least one hashtag object before submitting.";
         return;
       }
 
-      routeNote.textContent = `Submitted to ${selectedObject.route}. Capture committed to workspace memory.`;
+      modal.classList.remove("open");
+      toast.classList.add("show");
+
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 2200);
     });
 
-    renderLayer(activeLayer);
+    renderSpine();
+    renderLayer();
   </script>
 
 </body>
