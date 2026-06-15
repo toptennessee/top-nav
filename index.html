@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>top-nav</title>
+  <style>
+    :root {
+      --bg: #0e1116;
+      --panel: #151922;
+      --panel-2: #1b2130;
+      --border: #2a3140;
+      --text: #f4f6fb;
+      --muted: #9aa4b2;
+      --accent: #7dd3fc;
+      --green: #86efac;
+      --yellow: #fde68a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    .browser-shell {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: var(--panel);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .window-bar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 16px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      background: var(--muted);
+    }
+
+    .dot.red { background: #f87171; }
+    .dot.yellow { background: #facc15; }
+    .dot.green { background: #4ade80; }
+
+    .tab-strip {
+      display: flex;
+      gap: 6px;
+      padding: 10px 16px 0;
+      overflow-x: auto;
+    }
+
+    .tab {
+      padding: 10px 16px;
+      background: var(--panel-2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+      border-bottom: none;
+      border-radius: 12px 12px 0 0;
+      text-decoration: none;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .tab.active {
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    .address-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: var(--bg);
+    }
+
+    .address {
+      flex: 1;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: var(--panel-2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    main {
+      max-width: 980px;
+      margin: 0 auto;
+      padding: 56px 24px;
+    }
+
+    section {
+      padding: 40px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    h1, h2, h3 {
+      line-height: 1.15;
+    }
+
+    h1 {
+      font-size: clamp(2.4rem, 7vw, 5rem);
+      margin-bottom: 16px;
+    }
+
+    h2 {
+      font-size: 2rem;
+      margin-top: 0;
+    }
+
+    p {
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .signal {
+      color: var(--accent);
+      font-weight: 700;
+      font-size: 1.25rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 20px;
+    }
+
+    code, pre {
+      background: var(--panel);
+      color: #dbeafe;
+      border-radius: 10px;
+    }
+
+    pre {
+      padding: 18px;
+      overflow-x: auto;
+      border: 1px solid var(--border);
+    }
+
+    .tag {
+      display: inline-block;
+      margin: 4px 6px 4px 0;
+      padding: 5px 10px;
+      border-radius: 999px;
+      background: var(--panel-2);
+      color: var(--accent);
+      font-size: 13px;
+      border: 1px solid var(--border);
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="browser-shell">
+    <div class="window-bar">
+      <span class="dot red"></span>
+      <span class="dot yellow"></span>
+      <span class="dot green"></span>
+    </div>
+
+    <nav class="tab-strip">
+      <a class="tab active" href="#overview">Overview</a>
+      <a class="tab" href="#object">TopNav</a>
+      <a class="tab" href="#tab">#Tab</a>
+      <a class="tab" href="#loop">Loop</a>
+      <a class="tab" href="#schema">Schema</a>
+      <a class="tab" href="#failure">Failure Modes</a>
+    </nav>
+
+    <div class="address-row">
+      <div class="address">top-nav://human-navigation/system-intelligence</div>
+    </div>
+  </div>
+
+  <main>
+    <header id="overview">
+      <h1>top-nav</h1>
+      <p class="signal">People navigate. The system observes, connects, and improves.</p>
+      <p>
+        top-nav is a Top Navigation Object Architecture.
+        It uses familiar browser-like navigation patterns while the system manages
+        objects, relationships, routing, state, usage, and learning underneath.
+      </p>
+    </header>
+
+    <section>
+      <h2>What This Is</h2>
+      <p>
+        This is not a navbar component. This is a reusable architecture pattern
+        for turning visible navigation into a system-aware control layer.
+      </p>
+
+      <div class="grid">
+        <div class="card">
+          <h3>User Sees</h3>
+          <p>Tabs, groups, labels, pages, search, active state.</p>
+        </div>
+
+        <div class="card">
+          <h3>System Sees</h3>
+          <p>Objects, routes, relationships, intent, state, movement, and friction.</p>
+        </div>
+
+        <div class="card">
+          <h3>System Learns</h3>
+          <p>Usage patterns, priority, dead paths, repeated behavior, and navigation improvements.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="object">
+      <h2>Object: TopNav</h2>
+      <p>
+        TopNav is the visible navigation surface and the root object of this pattern.
+        It organizes TabGroups and TabObjects into a human-readable control system.
+      </p>
+
+      <pre><code>TopNav
+  ↓
+TabGroup
+  ↓
+TabObject
+  ↓
+ContentRoute
+  ↓
+SystemObservation
+  ↓
+NavigationRefinement</code></pre>
+    </section>
+
+    <section id="tab">
+      <h2>Object: #Tab</h2>
+      <p>
+        A #Tab is not just a link. It is the smallest visible navigation object.
+        It routes users to content while giving the system a readable signal of intent.
+      </p>
+
+      <div>
+        <span class="tag">visible label</span>
+        <span class="tag">route</span>
+        <span class="tag">state</span>
+        <span class="tag">relationships</span>
+        <span class="tag">usage signal</span>
+        <span class="tag">priority</span>
+      </div>
+    </section>
+
+    <section id="loop">
+      <h2>Closed Loop</h2>
+
+      <pre><code>User selects tab
+  ↓
+System identifies intent
+  ↓
+Route loads content
+  ↓
+Relationships are mapped
+  ↓
+Activity is observed
+  ↓
+Friction is detected
+  ↓
+Navigation is refined</code></pre>
+
+      <p>
+        This turns static navigation into a living system.
+      </p>
+    </section>
+
+    <section id="schema">
+      <h2>Core Schema</h2>
+
+      <pre><code>type TopNav = {
+  id: string;
+  label: string;
+  groups: TabGroup[];
+  activeTabId?: string;
+  createdAt: string;
+  updatedAt: string;
+};
+
+type TabGroup = {
+  id: string;
+  label: string;
+  purpose:
+    | "navigation"
+    | "workflow"
+    | "knowledge"
+    | "operations"
+    | "analytics";
+
+  tabs: TabObject[];
+  order: number;
+};
+
+type TabObject = {
+  id: string;
+  label: string;
+  slug: string;
+  route: string;
+
+  tabType:
+    | "primary"
+    | "secondary"
+    | "utility"
+    | "system";
+
+  state:
+    | "active"
+    | "inactive"
+    | "hidden"
+    | "archived";
+
+  visibility:
+    | "public"
+    | "private"
+    | "role_based"
+    | "state_based";
+
+  relatedObjectIds: string[];
+  priority: number;
+
+  createdAt: string;
+  updatedAt: string;
+};
+
+type SystemObservation = {
+  tabId: string;
+
+  event:
+    | "viewed"
+    | "clicked"
+    | "ignored"
+    | "searched_from"
+    | "exited_from";
+
+  frictionSignal:
+    | "none"
+    | "low"
+    | "medium"
+    | "high";
+
+  timestamp: string;
+};</code></pre>
+    </section>
+
+    <section id="failure">
+      <h2>Failure Modes</h2>
+
+      <div class="grid">
+        <div class="card">
+          <h3>Static Tabs</h3>
+          <p>Tabs exist only as labels. The system learns nothing.</p>
+        </div>
+
+        <div class="card">
+          <h3>Object Leakage</h3>
+          <p>Users are forced to understand backend structure instead of navigating naturally.</p>
+        </div>
+
+        <div class="card">
+          <h3>No Feedback Loop</h3>
+          <p>Activity is recorded but never used to improve navigation.</p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Deployment Rule</h2>
+      <p>
+        Every visible tab must map to a system object.
+        Every system object must create routing, relationship, learning, or operational value.
+      </p>
+    </section>
+  </main>
+
+</body>
+</html>
