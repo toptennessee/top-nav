@@ -3,104 +3,126 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>top-nav Seed System</title>
+  <title>top-nav</title>
+
   <style>
     :root {
       --bg: #f6f5f2;
       --surface: #ffffff;
       --soft: #faf9f6;
       --ink: #171717;
-      --muted: #6f6f68;
+      --muted: #74716a;
       --line: #e6e2d8;
-      --blue: #2563eb;
-      --radius: 22px;
-      --shadow: 0 24px 70px rgba(20,20,20,.08);
+      --shadow: 0 28px 80px rgba(20, 20, 20, 0.12);
+      --radius: 28px;
     }
 
-    * { box-sizing: border-box; }
+    * {
+      box-sizing: border-box;
+    }
 
     body {
       margin: 0;
-      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: var(--bg);
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,0.9), transparent 35%),
+        var(--bg);
       color: var(--ink);
-      line-height: 1.55;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
-    header {
-      max-width: 980px;
-      margin: auto;
-      padding: 72px 22px 36px;
+    button,
+    textarea {
+      font: inherit;
     }
 
-    h1 {
-      font-size: clamp(3rem, 8vw, 6.5rem);
-      line-height: .92;
-      letter-spacing: -.075em;
-      margin: 0 0 24px;
+    .screen {
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      padding: 22px;
     }
 
-    h2 {
-      font-size: clamp(2rem, 4vw, 3rem);
-      line-height: 1;
-      letter-spacing: -.055em;
-      margin: 0 0 18px;
-    }
-
-    p {
-      color: var(--muted);
-      font-size: 17px;
-      max-width: 720px;
-    }
-
-    .signal {
-      color: var(--ink);
-      font-size: 22px;
-      font-weight: 760;
-    }
-
-    .capture-shell {
-      max-width: 430px;
-      margin: 40px auto;
+    .app {
+      width: min(420px, 100%);
+      height: min(860px, calc(100vh - 44px));
       background: var(--surface);
       border: 1px solid var(--line);
-      border-radius: 32px;
+      border-radius: 36px;
       box-shadow: var(--shadow);
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
     }
 
-    .capture-top {
+    .top {
       padding: 18px;
-      border-bottom: 1px solid var(--line);
       background: var(--soft);
+      border-bottom: 1px solid var(--line);
     }
 
-    .capture-title {
-      font-weight: 850;
-      letter-spacing: -.04em;
+    .app-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       margin-bottom: 14px;
     }
 
-    .capture-input {
-      width: 100%;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 15px;
-      font-size: 15px;
-      outline: none;
-      background: white;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      font-weight: 850;
+      letter-spacing: -0.04em;
     }
 
-    .spine-row {
+    .mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 11px;
+      background: var(--ink);
+      color: white;
+      display: grid;
+      place-items: center;
+      font-weight: 900;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .capture {
+      width: 100%;
+      height: 104px;
+      border: 1px solid var(--line);
+      border-radius: 22px;
+      padding: 15px;
+      background: white;
+      color: var(--ink);
+      resize: none;
+      outline: none;
+      line-height: 1.45;
+      font-size: 15px;
+    }
+
+    .spine {
       display: flex;
       gap: 8px;
       overflow-x: auto;
       padding: 14px 18px;
       border-bottom: 1px solid var(--line);
       background: white;
+      scrollbar-width: none;
     }
 
-    .spine {
+    .spine::-webkit-scrollbar {
+      display: none;
+    }
+
+    .spine button {
+      flex: 0 0 auto;
       border: 1px solid var(--line);
       background: var(--soft);
       color: var(--muted);
@@ -108,19 +130,20 @@
       padding: 9px 13px;
       font-size: 11px;
       font-weight: 850;
-      letter-spacing: .04em;
-      white-space: nowrap;
+      letter-spacing: 0.04em;
       cursor: pointer;
     }
 
-    .spine.active {
+    .spine button.active {
       background: var(--ink);
-      color: white;
       border-color: var(--ink);
+      color: white;
     }
 
-    .layer {
-      padding: 20px;
+    .body {
+      flex: 1;
+      overflow: auto;
+      padding: 18px;
     }
 
     .eyebrow {
@@ -132,51 +155,89 @@
       padding: 5px 10px;
       font-size: 11px;
       font-weight: 850;
-      letter-spacing: .06em;
+      letter-spacing: 0.06em;
       text-transform: uppercase;
       margin-bottom: 12px;
     }
 
-    .tag-list {
+    h1 {
+      margin: 0;
+      font-size: 42px;
+      line-height: 0.92;
+      letter-spacing: -0.075em;
+    }
+
+    .layer-copy {
+      color: var(--muted);
+      margin: 12px 0 18px;
+      font-size: 15px;
+      line-height: 1.45;
+    }
+
+    .objects {
       display: grid;
       gap: 10px;
-      margin-top: 16px;
     }
 
-    .tag {
+    .object {
       border: 1px solid var(--line);
       background: white;
-      border-radius: 17px;
-      padding: 14px;
+      border-radius: 19px;
+      padding: 15px;
       cursor: pointer;
+      transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease;
     }
 
-    .tag.selected {
+    .object:active {
+      transform: scale(0.985);
+    }
+
+    .object.selected {
       border-color: var(--ink);
+      background: #fffefa;
       box-shadow: inset 0 0 0 1px var(--ink);
     }
 
-    .tag strong {
+    .object strong {
       display: block;
-      margin-bottom: 4px;
+      font-size: 17px;
+      letter-spacing: -0.03em;
+      margin-bottom: 5px;
     }
 
-    .tag span {
+    .object span {
       color: var(--muted);
       font-size: 13px;
+      line-height: 1.35;
     }
 
-    .selected-bar {
-      padding: 16px 20px;
+    .tray {
       border-top: 1px solid var(--line);
       background: var(--soft);
+      padding: 14px 18px 18px;
+    }
+
+    .tray-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      font-size: 13px;
+      font-weight: 850;
+      margin-bottom: 10px;
+    }
+
+    .count {
+      color: var(--muted);
+      font-weight: 750;
     }
 
     .pills {
       display: flex;
       flex-wrap: wrap;
       gap: 7px;
-      margin-top: 10px;
+      min-height: 33px;
+      margin-bottom: 12px;
     }
 
     .pill {
@@ -185,207 +246,273 @@
       border-radius: 999px;
       padding: 6px 10px;
       font-size: 13px;
-      font-weight: 750;
+      font-weight: 800;
+    }
+
+    .empty {
+      color: var(--muted);
+      font-size: 13px;
+      padding: 7px 0;
     }
 
     .submit {
       width: 100%;
-      margin-top: 14px;
       border: 0;
       border-radius: 999px;
       background: var(--ink);
       color: white;
-      padding: 13px 18px;
-      font-weight: 800;
+      padding: 14px 18px;
+      font-weight: 850;
       cursor: pointer;
+      font-size: 15px;
     }
 
-    main {
-      max-width: 980px;
-      margin: auto;
-      padding: 20px 22px 80px;
+    .submit:active {
+      transform: scale(0.99);
     }
 
-    section {
-      padding: 46px 0;
-      border-top: 1px solid var(--line);
-    }
-
-    pre {
-      background: #111827;
-      color: #e5e7eb;
-      border-radius: 18px;
-      padding: 22px;
-      overflow-x: auto;
-      line-height: 1.65;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-    }
-
-    .card {
-      background: white;
+    .receipt {
+      display: none;
+      margin-top: 12px;
       border: 1px solid var(--line);
+      background: white;
       border-radius: 18px;
-      padding: 20px;
+      padding: 13px;
+      font-size: 13px;
+      color: var(--muted);
+      line-height: 1.45;
     }
 
-    @media (max-width: 760px) {
-      .grid { grid-template-columns: 1fr; }
+    .receipt.show {
+      display: block;
+    }
+
+    .receipt strong {
+      color: var(--ink);
+    }
+
+    @media (max-width: 460px) {
+      .screen {
+        padding: 0;
+      }
+
+      .app {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        border: 0;
+      }
     }
   </style>
 </head>
 
 <body>
+  <main class="screen">
+    <section class="app">
+      <header class="top">
+        <div class="app-bar">
+          <div class="brand">
+            <div class="mark">#</div>
+            <span>top-nav</span>
+          </div>
+          <div class="small">capture layer</div>
+        </div>
 
-<header>
-  <h1>Seeds before the tree.</h1>
-  <p class="signal">
-    top-nav is the reusable seed pattern for turning captured input into classified, reusable system meaning.
-  </p>
-  <p>
-    It begins with capture. Then a functional spine gives the capture a role.
-    Hashtag objects attach measurable meaning. Submit commits the result for later use.
-  </p>
-</header>
+        <textarea id="capture" class="capture">They had the rooms. This gives the rooms grammar.</textarea>
+      </header>
 
-<div class="capture-shell">
-  <div class="capture-top">
-    <div class="capture-title">Capture Workspace</div>
-    <input class="capture-input" value="They had the rooms. This gives the rooms grammar." />
-  </div>
+      <nav id="spine" class="spine" aria-label="Primary layers"></nav>
 
-  <div class="spine-row" id="spineRow"></div>
+      <section class="body">
+        <div class="eyebrow">Primary Layer</div>
+        <h1 id="layerTitle">CAPTURE</h1>
+        <p id="layerCopy" class="layer-copy">Raw input enters.</p>
+        <div id="objects" class="objects"></div>
+      </section>
 
-  <div class="layer">
-    <div class="eyebrow">Current Layer</div>
-    <h2 id="layerTitle">CAPTURE</h2>
-    <p id="layerText">Raw input enters.</p>
-    <div class="tag-list" id="tagList"></div>
-  </div>
+      <footer class="tray">
+        <div class="tray-head">
+          <span>Selected #tab objects</span>
+          <span id="count" class="count">0</span>
+        </div>
 
-  <div class="selected-bar">
-    <strong>Selected grammar</strong>
-    <div class="pills" id="selectedPills"></div>
-    <button class="submit" id="submit">Submit Capture</button>
-  </div>
-</div>
+        <div id="pills" class="pills">
+          <div class="empty">Select from any layer.</div>
+        </div>
 
-<main>
-  <section>
-    <h2>Correction</h2>
-    <p>
-      This is not a navbar and not a finished product tree.
-      This is the portable seed layer: capture, classify, attach meaning, measure, and reuse.
-    </p>
-  </section>
+        <button id="submit" class="submit">Submit Capture</button>
 
-  <section>
-    <h2>Functional Spine</h2>
-    <pre><code>CAPTURE    raw input enters
-STRUCTURE  raw input gets shaped
-COORDINATE people, timing, ownership, and movement align
-BUILD      ideas become assets or systems
-EXECUTE    work gets done
-DOCUMENT   decisions and knowledge are preserved
-AGGREGATE  scattered inputs become larger patterns
-IMPROVE    the system learns from itself</code></pre>
-  </section>
+        <div id="receipt" class="receipt"></div>
+      </footer>
+    </section>
+  </main>
 
-  <section>
-    <h2>Core Distinction</h2>
-    <div class="grid">
-      <div class="card">
-        <h3>User Does</h3>
-        <p>Captures input and selects the relevant functional markers.</p>
-      </div>
-      <div class="card">
-        <h3>System Receives</h3>
-        <p>Structured metadata attached to the captured item.</p>
-      </div>
-      <div class="card">
-        <h3>Future Use</h3>
-        <p>The capture becomes searchable, measurable, and reusable.</p>
-      </div>
-    </div>
-  </section>
+  <script>
+    const layers = [
+      {
+        label: "CAPTURE",
+        copy: "Raw input enters.",
+        objects: [
+          ["#capture", "raw signal entering the system"],
+          ["#inbox", "unsorted intake"],
+          ["#signal", "notable input"]
+        ]
+      },
+      {
+        label: "STRUCTURE",
+        copy: "Raw input gets shaped.",
+        objects: [
+          ["#structure", "organized meaning"],
+          ["#model", "reusable shape"],
+          ["#scope", "defined boundary"]
+        ]
+      },
+      {
+        label: "COORDINATE",
+        copy: "People, timing, ownership, and movement align.",
+        objects: [
+          ["#coordinate", "alignment"],
+          ["#owner", "responsibility"],
+          ["#handoff", "movement"]
+        ]
+      },
+      {
+        label: "BUILD",
+        copy: "Ideas become assets or systems.",
+        objects: [
+          ["#build", "creation"],
+          ["#asset", "reusable output"],
+          ["#system", "working structure"]
+        ]
+      },
+      {
+        label: "EXECUTE",
+        copy: "Work gets done.",
+        objects: [
+          ["#execute", "action"],
+          ["#task", "work item"],
+          ["#next", "next move"]
+        ]
+      },
+      {
+        label: "DOCUMENT",
+        copy: "Decisions and knowledge are preserved.",
+        objects: [
+          ["#document", "preserve"],
+          ["#decision", "recorded choice"],
+          ["#learning", "reusable lesson"]
+        ]
+      },
+      {
+        label: "AGGREGATE",
+        copy: "Scattered inputs become larger patterns.",
+        objects: [
+          ["#aggregate", "combine"],
+          ["#pattern", "repetition"],
+          ["#summary", "compression"]
+        ]
+      },
+      {
+        label: "IMPROVE",
+        copy: "The system learns from itself.",
+        objects: [
+          ["#improve", "refinement"],
+          ["#friction", "slow point"],
+          ["#optimize", "better path"]
+        ]
+      }
+    ];
 
-  <section>
-    <h2>Seed Loop</h2>
-    <pre><code>Input
-  ↓
-Functional spine
-  ↓
-Hashtag objects
-  ↓
-Selected grammar
-  ↓
-Submit
-  ↓
-Reusable record</code></pre>
-  </section>
-</main>
+    const spine = document.getElementById("spine");
+    const layerTitle = document.getElementById("layerTitle");
+    const layerCopy = document.getElementById("layerCopy");
+    const objects = document.getElementById("objects");
+    const pills = document.getElementById("pills");
+    const count = document.getElementById("count");
+    const receipt = document.getElementById("receipt");
+    const capture = document.getElementById("capture");
 
-<script>
-  const layers = [
-    ["CAPTURE", "Raw input enters.", [["#capture","raw signal"],["#inbox","unsorted intake"],["#signal","notable input"]]],
-    ["STRUCTURE", "Raw input gets shaped.", [["#structure","organized meaning"],["#model","reusable shape"],["#scope","defined boundary"]]],
-    ["COORDINATE", "People, timing, ownership, and movement align.", [["#coordinate","alignment"],["#owner","responsibility"],["#handoff","movement"]]],
-    ["BUILD", "Ideas become assets or systems.", [["#build","creation"],["#asset","reusable output"],["#system","working structure"]]],
-    ["EXECUTE", "Work gets done.", [["#execute","action"],["#task","work item"],["#next","next move"]]],
-    ["DOCUMENT", "Decisions and knowledge are preserved.", [["#document","preserve"],["#decision","recorded choice"],["#learning","reusable lesson"]]],
-    ["AGGREGATE", "Scattered inputs become larger patterns.", [["#aggregate","combine"],["#pattern","repetition"],["#summary","compression"]]],
-    ["IMPROVE", "The system learns from itself.", [["#improve","refinement"],["#friction","slow point"],["#optimize","better path"]]]
-  ];
+    let active = 0;
+    let selected = {};
 
-  const spineRow = document.getElementById("spineRow");
-  const tagList = document.getElementById("tagList");
-  const layerTitle = document.getElementById("layerTitle");
-  const layerText = document.getElementById("layerText");
-  const selectedPills = document.getElementById("selectedPills");
+    function render() {
+      spine.innerHTML = "";
 
-  let active = 0;
-  let selected = {};
+      layers.forEach((layer, index) => {
+        const button = document.createElement("button");
+        button.textContent = layer.label;
+        button.className = index === active ? "active" : "";
+        button.onclick = () => {
+          active = index;
+          receipt.classList.remove("show");
+          render();
+        };
+        spine.appendChild(button);
+      });
 
-  function render() {
-    spineRow.innerHTML = "";
-    layers.forEach((layer, index) => {
-      const btn = document.createElement("button");
-      btn.className = "spine" + (index === active ? " active" : "");
-      btn.textContent = layer[0];
-      btn.onclick = () => { active = index; render(); };
-      spineRow.appendChild(btn);
-    });
+      const layer = layers[active];
 
-    layerTitle.textContent = layers[active][0];
-    layerText.textContent = layers[active][1];
+      layerTitle.textContent = layer.label;
+      layerCopy.textContent = layer.copy;
 
-    tagList.innerHTML = "";
-    layers[active][2].forEach(([tag, meaning]) => {
-      const item = document.createElement("div");
-      item.className = "tag" + (selected[tag] ? " selected" : "");
-      item.innerHTML = `<strong>${tag}</strong><span>${meaning}</span>`;
-      item.onclick = () => {
-        selected[tag] ? delete selected[tag] : selected[tag] = meaning;
-        render();
-      };
-      tagList.appendChild(item);
-    });
+      objects.innerHTML = "";
 
-    selectedPills.innerHTML = Object.keys(selected).length
-      ? Object.keys(selected).map(tag => `<div class="pill">${tag}</div>`).join("")
-      : `<div class="pill">none selected</div>`;
-  }
+      layer.objects.forEach(([tag, meaning]) => {
+        const card = document.createElement("button");
+        card.type = "button";
+        card.className = "object" + (selected[tag] ? " selected" : "");
+        card.innerHTML = `<strong>${tag}</strong><span>${meaning}</span>`;
 
-  document.getElementById("submit").onclick = () => {
-    alert("Capture submitted with: " + Object.keys(selected).join(", "));
-  };
+        card.onclick = () => {
+          if (selected[tag]) {
+            delete selected[tag];
+          } else {
+            selected[tag] = {
+              tag,
+              meaning,
+              layer: layer.label
+            };
+          }
 
-  render();
-</script>
+          receipt.classList.remove("show");
+          render();
+        };
 
+        objects.appendChild(card);
+      });
+
+      const tags = Object.keys(selected);
+
+      count.textContent = `${tags.length} selected`;
+
+      pills.innerHTML = tags.length
+        ? tags.map(tag => `<div class="pill">${tag}</div>`).join("")
+        : `<div class="empty">Select from any layer.</div>`;
+    }
+
+    document.getElementById("submit").onclick = () => {
+      const items = Object.values(selected);
+
+      if (!items.length) {
+        receipt.innerHTML = "<strong>No #tab objects selected.</strong><br>Select at least one before submitting.";
+        receipt.classList.add("show");
+        return;
+      }
+
+      const grouped = items
+        .map(item => `${item.layer}: ${item.tag}`)
+        .join(" · ");
+
+      receipt.innerHTML = `
+        <strong>Submitted.</strong><br>
+        Capture: ${capture.value}<br>
+        #tab objects: ${grouped}
+      `;
+
+      receipt.classList.add("show");
+    };
+
+    render();
+  </script>
 </body>
 </html>
