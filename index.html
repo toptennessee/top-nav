@@ -3,516 +3,282 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>top-nav</title>
-
+  <title>C10 Tab Object System</title>
   <style>
-    :root {
-      --bg: #f6f5f2;
-      --surface: #ffffff;
-      --soft: #faf9f6;
-      --ink: #171717;
-      --muted: #74716a;
-      --line: #e6e2d8;
-      --shadow: 0 28px 80px rgba(20, 20, 20, 0.12);
-      --radius: 28px;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
     body {
+      font-family: system-ui, sans-serif;
       margin: 0;
-      min-height: 100vh;
-      background:
-        radial-gradient(circle at top, rgba(255,255,255,0.9), transparent 35%),
-        var(--bg);
-      color: var(--ink);
-      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0f1115;
+      color: #f4f4f5;
+      line-height: 1.6;
     }
 
-    button,
-    textarea {
-      font: inherit;
+    header {
+      padding: 64px 24px;
+      max-width: 960px;
+      margin: auto;
     }
 
-    .screen {
-      min-height: 100vh;
-      display: grid;
-      place-items: center;
-      padding: 22px;
+    nav {
+      position: sticky;
+      top: 0;
+      background: #151821;
+      border-bottom: 1px solid #2a2f3a;
+      padding: 12px 24px;
+      z-index: 10;
     }
 
-    .app {
-      width: min(420px, 100%);
-      height: min(860px, calc(100vh - 44px));
-      background: var(--surface);
-      border: 1px solid var(--line);
-      border-radius: 36px;
-      box-shadow: var(--shadow);
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
+    nav a {
+      color: #c9d1ff;
+      margin-right: 18px;
+      text-decoration: none;
+      font-weight: 600;
     }
 
-    .top {
+    section {
+      max-width: 960px;
+      margin: auto;
+      padding: 40px 24px;
+      border-top: 1px solid #2a2f3a;
+    }
+
+    h1, h2, h3 {
+      line-height: 1.2;
+    }
+
+    code, pre {
+      background: #1b1f2a;
+      color: #d6e2ff;
+      border-radius: 8px;
+    }
+
+    pre {
       padding: 18px;
-      background: var(--soft);
-      border-bottom: 1px solid var(--line);
+      overflow-x: auto;
     }
 
-    .app-bar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-bottom: 14px;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      font-weight: 850;
-      letter-spacing: -0.04em;
-    }
-
-    .mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 11px;
-      background: var(--ink);
-      color: white;
-      display: grid;
-      place-items: center;
-      font-weight: 900;
-    }
-
-    .small {
-      color: var(--muted);
-      font-size: 12px;
+    .signal {
+      color: #8be9fd;
       font-weight: 700;
     }
 
-    .capture {
-      width: 100%;
-      height: 104px;
-      border: 1px solid var(--line);
-      border-radius: 22px;
-      padding: 15px;
-      background: white;
-      color: var(--ink);
-      resize: none;
-      outline: none;
-      line-height: 1.45;
-      font-size: 15px;
-    }
-
-    .spine {
-      display: flex;
-      gap: 8px;
-      overflow-x: auto;
-      padding: 14px 18px;
-      border-bottom: 1px solid var(--line);
-      background: white;
-      scrollbar-width: none;
-    }
-
-    .spine::-webkit-scrollbar {
-      display: none;
-    }
-
-    .spine button {
-      flex: 0 0 auto;
-      border: 1px solid var(--line);
-      background: var(--soft);
-      color: var(--muted);
-      border-radius: 999px;
-      padding: 9px 13px;
-      font-size: 11px;
-      font-weight: 850;
-      letter-spacing: 0.04em;
-      cursor: pointer;
-    }
-
-    .spine button.active {
-      background: var(--ink);
-      border-color: var(--ink);
-      color: white;
-    }
-
-    .body {
-      flex: 1;
-      overflow: auto;
-      padding: 18px;
-    }
-
-    .eyebrow {
-      display: inline-flex;
-      border: 1px solid var(--line);
-      background: var(--soft);
-      color: var(--muted);
-      border-radius: 999px;
-      padding: 5px 10px;
-      font-size: 11px;
-      font-weight: 850;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      margin-bottom: 12px;
-    }
-
-    h1 {
-      margin: 0;
-      font-size: 42px;
-      line-height: 0.92;
-      letter-spacing: -0.075em;
-    }
-
-    .layer-copy {
-      color: var(--muted);
-      margin: 12px 0 18px;
-      font-size: 15px;
-      line-height: 1.45;
-    }
-
-    .objects {
-      display: grid;
-      gap: 10px;
-    }
-
-    .object {
-      border: 1px solid var(--line);
-      background: white;
-      border-radius: 19px;
-      padding: 15px;
-      cursor: pointer;
-      transition: transform 0.14s ease, border-color 0.14s ease, background 0.14s ease;
-    }
-
-    .object:active {
-      transform: scale(0.985);
-    }
-
-    .object.selected {
-      border-color: var(--ink);
-      background: #fffefa;
-      box-shadow: inset 0 0 0 1px var(--ink);
-    }
-
-    .object strong {
-      display: block;
-      font-size: 17px;
-      letter-spacing: -0.03em;
-      margin-bottom: 5px;
-    }
-
-    .object span {
-      color: var(--muted);
-      font-size: 13px;
-      line-height: 1.35;
-    }
-
-    .tray {
-      border-top: 1px solid var(--line);
-      background: var(--soft);
-      padding: 14px 18px 18px;
-    }
-
-    .tray-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 12px;
-      font-size: 13px;
-      font-weight: 850;
-      margin-bottom: 10px;
-    }
-
-    .count {
-      color: var(--muted);
-      font-weight: 750;
-    }
-
-    .pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 7px;
-      min-height: 33px;
-      margin-bottom: 12px;
-    }
-
-    .pill {
-      border: 1px solid var(--line);
-      background: white;
-      border-radius: 999px;
-      padding: 6px 10px;
-      font-size: 13px;
-      font-weight: 800;
-    }
-
-    .empty {
-      color: var(--muted);
-      font-size: 13px;
-      padding: 7px 0;
-    }
-
-    .submit {
-      width: 100%;
-      border: 0;
-      border-radius: 999px;
-      background: var(--ink);
-      color: white;
-      padding: 14px 18px;
-      font-weight: 850;
-      cursor: pointer;
-      font-size: 15px;
-    }
-
-    .submit:active {
-      transform: scale(0.99);
-    }
-
-    .receipt {
-      display: none;
-      margin-top: 12px;
-      border: 1px solid var(--line);
-      background: white;
-      border-radius: 18px;
-      padding: 13px;
-      font-size: 13px;
-      color: var(--muted);
-      line-height: 1.45;
-    }
-
-    .receipt.show {
-      display: block;
-    }
-
-    .receipt strong {
-      color: var(--ink);
-    }
-
-    @media (max-width: 460px) {
-      .screen {
-        padding: 0;
-      }
-
-      .app {
-        width: 100%;
-        height: 100vh;
-        border-radius: 0;
-        border: 0;
-      }
+    .card {
+      background: #151821;
+      border: 1px solid #2a2f3a;
+      border-radius: 14px;
+      padding: 20px;
+      margin: 16px 0;
     }
   </style>
 </head>
-
 <body>
-  <main class="screen">
-    <section class="app">
-      <header class="top">
-        <div class="app-bar">
-          <div class="brand">
-            <div class="mark">#</div>
-            <span>top-nav</span>
-          </div>
-          <div class="small">capture layer</div>
-        </div>
 
-        <textarea id="capture" class="capture">They had the rooms. This gives the rooms grammar.</textarea>
-      </header>
+<nav>
+  <a href="#overview">Overview</a>
+  <a href="#tab-object">#Tab Object</a>
+  <a href="#top-nav">Top Nav</a>
+  <a href="#system-loop">System Loop</a>
+  <a href="#schemas">Schemas</a>
+</nav>
 
-      <nav id="spine" class="spine" aria-label="Primary layers"></nav>
+<header id="overview">
+  <h1>C10 Tab Object System</h1>
+  <p class="signal">People navigate. The system observes, connects, and improves.</p>
+  <p>
+    C10 is a bridge between human navigation and system intelligence.
+    Users interact with familiar top-nav tabs. Underneath, each tab is treated
+    as a system object with relationships, state, routing behavior, analytics,
+    and optimization signals.
+  </p>
+</header>
 
-      <section class="body">
-        <div class="eyebrow">Primary Layer</div>
-        <h1 id="layerTitle">CAPTURE</h1>
-        <p id="layerCopy" class="layer-copy">Raw input enters.</p>
-        <div id="objects" class="objects"></div>
-      </section>
+<section>
+  <h2>Core Distinction</h2>
 
-      <footer class="tray">
-        <div class="tray-head">
-          <span>Selected #tab objects</span>
-          <span id="count" class="count">0</span>
-        </div>
+  <div class="card">
+    <h3>User Sees</h3>
+    <p>Tabs, sections, categories, pages, activity, navigation.</p>
+  </div>
 
-        <div id="pills" class="pills">
-          <div class="empty">Select from any layer.</div>
-        </div>
+  <div class="card">
+    <h3>System Sees</h3>
+    <p>Objects, relationships, retrieval paths, permissions, states, usage patterns, and operational intent.</p>
+  </div>
+</section>
 
-        <button id="submit" class="submit">Submit Capture</button>
+<section id="tab-object">
+  <h2>Object: #Tab</h2>
 
-        <div id="receipt" class="receipt"></div>
-      </footer>
-    </section>
-  </main>
+  <h3>Purpose</h3>
+  <p>
+    A <code>#Tab</code> is the smallest navigable unit in C10.
+    It looks like a simple navigation label to the user, but functions as an
+    addressable object inside the system.
+  </p>
 
-  <script>
-    const layers = [
-      {
-        label: "CAPTURE",
-        copy: "Raw input enters.",
-        objects: [
-          ["#capture", "raw signal entering the system"],
-          ["#inbox", "unsorted intake"],
-          ["#signal", "notable input"]
-        ]
-      },
-      {
-        label: "STRUCTURE",
-        copy: "Raw input gets shaped.",
-        objects: [
-          ["#structure", "organized meaning"],
-          ["#model", "reusable shape"],
-          ["#scope", "defined boundary"]
-        ]
-      },
-      {
-        label: "COORDINATE",
-        copy: "People, timing, ownership, and movement align.",
-        objects: [
-          ["#coordinate", "alignment"],
-          ["#owner", "responsibility"],
-          ["#handoff", "movement"]
-        ]
-      },
-      {
-        label: "BUILD",
-        copy: "Ideas become assets or systems.",
-        objects: [
-          ["#build", "creation"],
-          ["#asset", "reusable output"],
-          ["#system", "working structure"]
-        ]
-      },
-      {
-        label: "EXECUTE",
-        copy: "Work gets done.",
-        objects: [
-          ["#execute", "action"],
-          ["#task", "work item"],
-          ["#next", "next move"]
-        ]
-      },
-      {
-        label: "DOCUMENT",
-        copy: "Decisions and knowledge are preserved.",
-        objects: [
-          ["#document", "preserve"],
-          ["#decision", "recorded choice"],
-          ["#learning", "reusable lesson"]
-        ]
-      },
-      {
-        label: "AGGREGATE",
-        copy: "Scattered inputs become larger patterns.",
-        objects: [
-          ["#aggregate", "combine"],
-          ["#pattern", "repetition"],
-          ["#summary", "compression"]
-        ]
-      },
-      {
-        label: "IMPROVE",
-        copy: "The system learns from itself.",
-        objects: [
-          ["#improve", "refinement"],
-          ["#friction", "slow point"],
-          ["#optimize", "better path"]
-        ]
-      }
-    ];
+  <h3>Correction</h3>
+  <p>
+    A tab is not just a link. A tab is a controlled interface object that routes
+    humans toward content while routing the system toward context.
+  </p>
+</section>
 
-    const spine = document.getElementById("spine");
-    const layerTitle = document.getElementById("layerTitle");
-    const layerCopy = document.getElementById("layerCopy");
-    const objects = document.getElementById("objects");
-    const pills = document.getElementById("pills");
-    const count = document.getElementById("count");
-    const receipt = document.getElementById("receipt");
-    const capture = document.getElementById("capture");
+<section id="top-nav">
+  <h2>Object: TopNav</h2>
 
-    let active = 0;
-    let selected = {};
+  <h3>Purpose</h3>
+  <p>
+    <code>TopNav</code> organizes active <code>#Tab</code> objects into a visible
+    human navigation layer. It is the user-facing map of the workspace.
+  </p>
 
-    function render() {
-      spine.innerHTML = "";
+  <pre><code>TopNav
+  ↓
+TabGroup
+  ↓
+#Tab
+  ↓
+ContentRoute
+  ↓
+SystemObservation</code></pre>
+</section>
 
-      layers.forEach((layer, index) => {
-        const button = document.createElement("button");
-        button.textContent = layer.label;
-        button.className = index === active ? "active" : "";
-        button.onclick = () => {
-          active = index;
-          receipt.classList.remove("show");
-          render();
-        };
-        spine.appendChild(button);
-      });
+<section id="system-loop">
+  <h2>Closed Loop</h2>
 
-      const layer = layers[active];
+  <pre><code>Human clicks tab
+    ↓
+System identifies intent
+    ↓
+Content route is loaded
+    ↓
+Relationships are mapped
+    ↓
+Usage signal is recorded
+    ↓
+Navigation is refined
+    ↓
+TopNav improves</code></pre>
 
-      layerTitle.textContent = layer.label;
-      layerCopy.textContent = layer.copy;
+  <p>
+    This turns static navigation into a live control system.
+  </p>
+</section>
 
-      objects.innerHTML = "";
+<section id="schemas">
+  <h2>Object Schemas</h2>
 
-      layer.objects.forEach(([tag, meaning]) => {
-        const card = document.createElement("button");
-        card.type = "button";
-        card.className = "object" + (selected[tag] ? " selected" : "");
-        card.innerHTML = `<strong>${tag}</strong><span>${meaning}</span>`;
+  <h3>TabObject</h3>
+  <pre><code>type TabObject = {
+  id: string;
 
-        card.onclick = () => {
-          if (selected[tag]) {
-            delete selected[tag];
-          } else {
-            selected[tag] = {
-              tag,
-              meaning,
-              layer: layer.label
-            };
-          }
+  label: string;
 
-          receipt.classList.remove("show");
-          render();
-        };
+  slug: string;
 
-        objects.appendChild(card);
-      });
+  tabType:
+    | "primary"
+    | "secondary"
+    | "utility"
+    | "system";
 
-      const tags = Object.keys(selected);
+  visibility:
+    | "public"
+    | "private"
+    | "role_based"
+    | "state_based";
 
-      count.textContent = `${tags.length} selected`;
+  state:
+    | "active"
+    | "inactive"
+    | "hidden"
+    | "archived";
 
-      pills.innerHTML = tags.length
-        ? tags.map(tag => `<div class="pill">${tag}</div>`).join("")
-        : `<div class="empty">Select from any layer.</div>`;
-    }
+  route: string;
 
-    document.getElementById("submit").onclick = () => {
-      const items = Object.values(selected);
+  parentGroupId?: string;
 
-      if (!items.length) {
-        receipt.innerHTML = "<strong>No #tab objects selected.</strong><br>Select at least one before submitting.";
-        receipt.classList.add("show");
-        return;
-      }
+  relatedObjectIds: string[];
 
-      const grouped = items
-        .map(item => `${item.layer}: ${item.tag}`)
-        .join(" · ");
+  priority: number;
 
-      receipt.innerHTML = `
-        <strong>Submitted.</strong><br>
-        Capture: ${capture.value}<br>
-        #tab objects: ${grouped}
-      `;
+  createdAt: string;
+  updatedAt: string;
+};</code></pre>
 
-      receipt.classList.add("show");
-    };
+  <h3>TabGroup</h3>
+  <pre><code>type TabGroup = {
+  id: string;
 
-    render();
-  </script>
+  label: string;
+
+  purpose:
+    | "navigation"
+    | "workflow"
+    | "knowledge"
+    | "operations"
+    | "analytics";
+
+  tabs: TabObject[];
+
+  displayMode:
+    | "top_nav"
+    | "sidebar"
+    | "dropdown"
+    | "contextual";
+
+  order: number;
+};</code></pre>
+
+  <h3>SystemObservation</h3>
+  <pre><code>type SystemObservation = {
+  tabId: string;
+
+  event:
+    | "viewed"
+    | "clicked"
+    | "ignored"
+    | "searched_from"
+    | "exited_from";
+
+  userIntent?: string;
+
+  frictionSignal:
+    | "none"
+    | "low"
+    | "medium"
+    | "high";
+
+  timestamp: string;
+};</code></pre>
+</section>
+
+<section>
+  <h2>Failure Modes</h2>
+
+  <div class="card">
+    <strong>Static Tabs</strong>
+    <p>Navigation becomes decorative and does not teach the system anything.</p>
+  </div>
+
+  <div class="card">
+    <strong>Object Leakage</strong>
+    <p>Users are forced to understand backend concepts instead of navigating naturally.</p>
+  </div>
+
+  <div class="card">
+    <strong>No Feedback Layer</strong>
+    <p>The system records activity but never improves routing, grouping, or priority.</p>
+  </div>
+</section>
+
+<section>
+  <h2>Deployment Rule</h2>
+  <p>
+    Every visible tab must have a system object behind it.
+    Every system object must produce routing, relationship, or learning value.
+  </p>
+</section>
+
 </body>
 </html>
